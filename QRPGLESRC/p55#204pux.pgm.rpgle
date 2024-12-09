@@ -199,7 +199,7 @@ TTTT C                   ENDIF
      c                   kfld                    pro##
      c                   kfld                    qual              1
       * Update BLHD w/ pick up number if record has been populated
-     C                   IF        PRO##   > 0
+     C                   IF        PRO##  <> 0
      c                   eval      qual='N'
       *
      C     PRO##         CHAIN     BLHD01
