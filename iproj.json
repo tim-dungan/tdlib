@@ -2,5 +2,6 @@
   "description": "Tim Dungan Library Project demo",
   "repository": "https://github.com/tim-dungan/tdlib",
   "curlib": "&CURLIB",
-  "buildCommand": "makei build"
+  "buildCommand": "makei build",
+  "compileCommand": "makei compile -f {filename}"
 }
