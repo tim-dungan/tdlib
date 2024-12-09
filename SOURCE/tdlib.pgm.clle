@@ -1,6 +1,8 @@
 pgm
   addlible DBU11    *last
   monmsg cpf9999
+  addlible TDLIB    *last
+  monmsg cpf9999
   addlible TDDEV    *last
   monmsg cpf9999
   addlible SQLTOOLS *last
