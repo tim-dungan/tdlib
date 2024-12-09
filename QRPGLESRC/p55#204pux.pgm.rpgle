@@ -33,7 +33,6 @@
       *
       /COPY QRPGLESRC,#SPPROT
       *
-      *****************************************************************
      D DIVPO2_TCA      S              6    DIM(70) CTDATA PERRCD(1)             DIV(4 pos),PO(2 pos)
      D CONS#_TCA       S                   DIM(70) ALT(DIVPO2_TCA) LIKE(CONS#9)     5,0
      D DIVPO2_TNJ      S              6    DIM(37) CTDATA PERRCD(1)             DIV(4 pos),PO(2 pos)
@@ -41,8 +40,7 @@
       *
      D CONS_ARR        S             39    DIM(150)                             was 99
      D SameConsPO_ARR  S             24    DIM(150)                             was 99
-     d
-      *************************************************************************
+      *
      D  DIVPO12        DS
      D  div                    1      4
      D  PO_12                  5      6
@@ -61,7 +59,6 @@
      D  div_PO#C              21     24
      d CALLCLRTS       s              1
      d RTSSPID         s                    like(THSPID)
-      *************************************************************************
       *
      D  WkPu#          s                   LIKE(punum1)
      D  PMMBOX         s                   LIKE(THMBOX)
@@ -120,7 +117,6 @@
      d PUSTOPS_#       s              3  0
      d PUSTOPS_M       s              1
      d RATED           s              1
-      *************************************************************************
       *
      C     *ENTRY        PLIST
      C                   PARM                    PMMBOX
@@ -154,7 +150,7 @@
      C     PMMBOX        CHAIN(n)  R204#H01
      c                   if        THSTOP > 2
      c                                and THTPID = 'DSW204LTL'
-      *  TRY IF CAN MERGE PU STOPS
+      * try to merge PU stops
      C                   EXSR      $DSWLTL
      C                   IF        PUSTOPS_M = 'Y'
      C                   ELSE
@@ -166,7 +162,6 @@
      c                   goto      #EXITPGM
      C                   ENDIF                                                  IF PUSTOPS_M.
      c                   endif
-      *
       * Get P/U   Number
      C                   if        PMPUNUM = *blanks
      C                   EXSR      $GetNumbers
@@ -176,16 +171,14 @@
      C                   EVAL      FLG      =  '0'
      C                   endif
      C
-      * ----------------------------------------------------------------------
       * Map to PUHD
-      * ----------------------------------------------------------------------
      C     PMMBOX        CHAIN(n)  R204#H01
      C                   IF        %FOUND (R204#H01) AND FLG = '1'
-      **
      c                   exsr      $hdrdet                                      write puhd,pudt
-     c                   IF        THTPID <> 'TJM204LTL'                         (T1)
+      *
+     c                   IF        THTPID <> 'TJM204LTL'                        TJMax
      c                               and
-     c                             THTPID <> 'WIN204LTL'                         (T1)
+     c                             THTPID <> 'WIN204LTL'                        Winners
      c                   exsr      $po                                          write pupo
      c                   ENDIF
       * Get PRO# that may have been generated for the 990
@@ -206,13 +199,12 @@ TTTT C                   ENDIF
      c                   kfld                    pro##
      c                   kfld                    qual              1
       * Update BLHD w/ pick up number if record has been populated
-      *
      C                   IF        PRO##   > 0
      c                   eval      qual='N'
       *
      C     PRO##         CHAIN     BLHD01
      C                   If        %FOUND(BLHD01)
-      *********
+      *
      C                   IF        SHCODH = *BLANKS
      C                   EVAL      SHCODH =  %trim(TH_OLOCT)
      C                   ENDIF
@@ -252,8 +244,6 @@ TTTT C                   ENDIF
      C                   ENDIF                                                  if pro# <> 0
       **
      C                   ENDIF                                                  if not eof H01
-TTTT  *
-TTTT  * ----------------------------------------------------------------------
 TTTT  *
 TTTT c     #EXITPGM      TAG
       *=====================================================================================
