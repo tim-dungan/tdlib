@@ -1,0 +1,56 @@
+      *%METADATA                                                       *
+      * %TEXT Scan Checks / Invoices for A/P - X.                      *
+      *%EMETADATA                                                      *
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      PRINT
+     A                                      CLEAR
+     A          R ASSUME
+     A                                      ASSUME
+     A                                      OVERLAY
+     A                                  1  3' '
+     A          R SCR01
+     A                                      WINDOW(2 10 15 60)
+     A                                      CF03(03 'Exit')
+     A                                      CF12(12 'Cancel')
+     A                                      CF04(04 'Prompt')
+     A                                      RTNCSRLOC(*RECNAME &@RCD &@FIELD)
+     A                                      RTNCSRLOC(*WINDOW &@LINE &@POS)
+     A  24                                  CSRLOC(@LINE      @POS)
+     A                                      WDWBORDER((*COLOR BLU) (*DSPATR RI)-
+     A                                       (*CHAR '        '))
+     A            CURROW         3S 0H
+     A            CURCOL         3S 0H
+     A            @RCD          10A  H
+     A            @FIELD        10A  H
+     A            @LINE          3S 0H
+     A            @POS           3S 0H
+     A                                  1  1'IMGX59D'
+     A                                  1 17'Scan Checks/Invoices for A/P'
+     A                                      DSPATR(UL)
+     A                                      COLOR(BLU)
+     A                                  1 52DATE
+     A                                      EDTCDE(Y)
+     A                                  3  2'Company .....:'
+     A                                      DSPATR(HI)
+     A            S1COMP         3A  B  3 17
+     A                                 11  2'Document Type:'
+     A                                      DSPATR(HI)
+     A            S1TYPE        10A  B 11 17DSPATR(PR)
+     A                                 11 29'(F4)'
+     A                                      DSPATR(HI)
+     A                                 13  1'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 13 10'F4=Prompt'
+     A                                      COLOR(BLU)
+     A                                 13 21'F12=Cancel'
+     A                                      COLOR(BLU)
+     A                                 13 33'Enter=Scan'
+     A                                      COLOR(BLU)
+     A            S1MSG         60A  O 14  1COLOR(RED)
+     A                                  4  2'Vendor# .....:'
+     A                                      COLOR(WHT)
+     A                                  5  2'Check# ......:'
+     A                                      COLOR(WHT)
+     A            S1VEND#        5A  B  4 17
+     A            S1CHECK#       7A  B  5 17
+     A            VNAME         30A  O  4 25

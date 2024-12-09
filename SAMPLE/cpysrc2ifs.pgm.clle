@@ -1,0 +1,1014 @@
+      /*%METADATA                                                     */
+      /* %TEXT copy source members to IFS directory                   */
+      /*%EMETADATA                                                    */
+             PGM        PARM(&PFROMFILE &PTODIR &PMBR &PLIBASPDEV &PCRTDIR +
+                          &PSTMFEXT &PSTMFCCSID &PENDLINFMT &PAUT +
+                          &PSTMFTXT &PREPORT &PSLOC)
+
+/* Parameters */
+             DCL        VAR(&PFROMFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&FROMFILE) TYPE(*CHAR) STG(*DEFINED) LEN(10) +
+                          DEFVAR(&PFROMFILE 1)
+             DCL        VAR(&FROMLIB) TYPE(*CHAR) STG(*DEFINED) LEN(10) +
+                          DEFVAR(&PFROMFILE 11)
+             DCL        VAR(&PTODIR) TYPE(*CHAR) LEN(128)
+             DCL        VAR(&PMBR) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PLIBASPDEV) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PCRTDIR) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PSTMFEXT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PSTMFCCSID) TYPE(*INT) LEN(4)
+             DCL        VAR(&PENDLINFMT) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&PAUT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PSTMFTXT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PREPORT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PSLOC) TYPE(*CHAR) LEN(4)
+
+/* Variables */
+             DCL        VAR(&OBJATR) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&NBRSELMBR) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&NBRSELPFS) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&ASPPATH) TYPE(*CHAR) LEN(11)
+             DCL        VAR(&MBRPATH) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&TODIR) TYPE(*CHAR) LEN(128)
+             DCL        VAR(&STMFEXT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&STMF) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&REPORT) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&MBRCRTCEN) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&MBRCRTDAT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MBRCRTTIM) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&MBRCRTTS) TYPE(*CHAR) LEN(26)
+             DCL        VAR(&MBRCHGCEN) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&MBRCHGDAT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MBRCHGTIM) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&MBRCHGTS) TYPE(*CHAR) LEN(26)
+             DCL        VAR(&MBRCNTX) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&MBRCNT) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&MBRCNTCHAR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&RCDCNT) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&RCDCNTCHAR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&IFSSIZ) TYPE(*INT) LEN(8)
+             DCL        VAR(&IFSSIZCHAR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&IFSALC) TYPE(*INT) LEN(8)
+             DCL        VAR(&IFSALCCHAR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&SLOCCNT) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&SLOCCNTCHR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&SLOC) TYPE(*LGL) LEN(1)
+
+/* Files */
+             DCLF       FILE(PFSRCLIST) OPNID(PFSRC)
+             DCLF       FILE(SLOC) OPNID(SLOC)
+             DCLF       FILE(MBRLIST) OPNID(MBRINFO)
+
+/* stat64 */
+             DCL        VAR(&STATRTNVAL) TYPE(*INT) LEN(4)
+             DCL        VAR(&STATPATH) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&STATBUFFER) TYPE(*CHAR) LEN(4096)
+             DCL        VAR(&STATOBJSIZ) TYPE(*INT) STG(*DEFINED) LEN(8) +
+                          DEFVAR(&STATBUFFER 17)
+             DCL        VAR(&STATALCSIZ) TYPE(*UINT) STG(*DEFINED) LEN(8) +
+                          DEFVAR(&STATBUFFER 49)
+             DCL        VAR(&STATOBJTYP) TYPE(*CHAR) STG(*DEFINED) LEN(10) +
+                          DEFVAR(&STATBUFFER 61)
+
+/* strlen */
+             DCL        VAR(&STRTMP) TYPE(*CHAR) LEN(32767)
+             DCL        VAR(&LENINT) TYPE(*UINT) LEN(4)
+
+/* SUBR(VFYPFSRC): Start *********************************************/
+             DCL        VAR(&VFYPFSRC) TYPE(*INT) LEN(4)
+
+/* QDBRTVFD */
+             DCL        VAR(&FILD0100) TYPE(*CHAR) LEN(400)
+             DCL        VAR(&QDBFHFLG) TYPE(*CHAR) STG(*DEFINED) LEN(1) +
+                          DEFVAR(&FILD0100 9)
+             DCL        VAR(&QDBFHMNUM) TYPE(*INT) STG(*DEFINED) LEN(2) +
+                          DEFVAR(&FILD0100 48)
+             DCL        VAR(&FILD0100L) TYPE(*INT) LEN(4) VALUE(400)
+             DCL        VAR(&QDBFOUT) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&QDBFIN) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&QDBFRCDFMT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&QDBFOVR) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&QDBFSYS) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&QDBFFMTTYP) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&BIT_2_ON) TYPE(*LGL) LEN(1)
+             DCL        VAR(&BIT_4_ON) TYPE(*LGL) LEN(1)
+             DCL        VAR(&BIT_POS) TYPE(*INT) LEN(4)
+             DCL        VAR(&FILEATRB) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&FILETYPE) TYPE(*CHAR) LEN(3)
+             DCL        VAR(&NBRALLMBR) TYPE(*INT) LEN(2)
+/* SUBR(VFYPFSRC): End ***********************************************/
+
+/* SUBR(EDTNUM): Start ***********************************************/
+             DCL        VAR(&EDTNUM) TYPE(*INT) LEN(4)
+
+/* QECCVTEC, QECEDT */
+             DCL        VAR(&SIZEDEC) TYPE(*DEC) LEN(15 0)
+             DCL        VAR(&SIZECHAR) TYPE(*CHAR) LEN(19) /* xxx.xxx.xxx.xxx.xxx */
+             DCL        VAR(&EDTMASK) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&EDTMASKLEN) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&RCVVARLEN) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&ZROBAL) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&EDTCODE) TYPE(*CHAR) LEN(1) VALUE('1')
+             DCL        VAR(&CURRENCY) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&SRCVARPCSN) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&SRCVARDEC) TYPE(*CHAR) LEN(4)
+/* SUBR(EDTNUM): End *************************************************/
+
+/* SUBR(DUPQUOTE): Start *********************************************/
+             DCL        VAR(&DUPQUOTE) TYPE(*INT) LEN(4)
+
+             DCL        VAR(&TEXTIN) TYPE(*CHAR) LEN(50)
+             DCL        VAR(&TEXTOUT) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&TEXT_I) TYPE(*UINT) LEN(2)
+             DCL        VAR(&TEXT_J) TYPE(*UINT) LEN(2)
+/* SUBR(DUPQUOTE): End ***********************************************/
+
+/* RUNSQL */
+             DCL        VAR(&SQL) TYPE(*CHAR) LEN(5000)
+
+/* API Error & SUBR(RSTAPIERR): Start ********************************/
+             DCL        VAR(&RSTAPIERR) TYPE(*INT) LEN(4)
+
+             DCL        VAR(&APINAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRCNAME) TYPE(*CHAR) LEN(256) /* CALLPRC */
+             DCL        VAR(&APIERROR) TYPE(*CHAR) LEN(528)
+             DCL        VAR(&AEBYTPRO) TYPE(*INT) STG(*DEFINED) LEN(4) +
+                          DEFVAR(&APIERROR 1)
+             DCL        VAR(&AEBYTAVL) TYPE(*INT) STG(*DEFINED) LEN(4) +
+                          DEFVAR(&APIERROR 5)
+             DCL        VAR(&AEEXCPID) TYPE(*CHAR) STG(*DEFINED) LEN(7) +
+                          DEFVAR(&APIERROR 9)
+             DCL        VAR(&AEEXCPDTA) TYPE(*CHAR) STG(*DEFINED) LEN(512) +
+                          DEFVAR(&APIERROR 17)
+/* API Error & SUBR(RSTAPIERR): End **********************************/
+
+/* _MATPGMNM */
+             DCL        VAR(&DATA) TYPE(*CHAR) LEN(80)
+             DCL        VAR(&PGMNAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PGMLIB) TYPE(*CHAR) LEN(10)
+
+/* RTVJOBA */
+             DCL        VAR(&JOBNAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&JOBTYPE) TYPE(*CHAR) LEN(1) /* 0=Batch 1=Inter */
+
+/* RCVMSG & SNDPGMMSG */
+             DCL        VAR(&CMDNAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&ERROR) TYPE(*LGL) VALUE('0')
+             DCL        VAR(&PGMERROR) TYPE(*LGL) VALUE('0')
+             DCL        VAR(&SUBRNAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&ERRORTEXT) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&MSGID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(512)
+             DCL        VAR(&MSGDTALEN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&MSG) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&MSGLEN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&SECLVL) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&SECLVLLEN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&MSGF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MSGFLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MSGKEY) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&MSGKEYRQS) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&MSGTYPE) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&RTNTYPE) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&SENDER) TYPE(*CHAR) LEN(80)
+             DCL        VAR(&SD_PGMSDR) TYPE(*CHAR) STG(*DEFINED) LEN(10) +
+                          DEFVAR(&SENDER 27)
+
+/* Constants */
+             DCL        VAR(&LOOP) TYPE(*LGL) VALUE('1')
+             DCL        VAR(&NULL) TYPE(*CHAR) LEN(1) VALUE(X'00')
+             DCL        VAR(&QUOTE) TYPE(*CHAR) LEN(1) VALUE(X'7D')
+
+/* Global monitor for any error messages */
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERROR))
+
+/* Retrieve program name & library */
+             CHGVAR     VAR(%BIN(&DATA 1 4)) VALUE(80)
+             CHGVAR     VAR(%BIN(&DATA 5 4)) VALUE(80)
+             CHGVAR     VAR(%BIN(&DATA 9 4)) VALUE(0)
+             CHGVAR     VAR(%BIN(&DATA 13 4)) VALUE(0)
+             CALLPRC    PRC('_MATPGMNM') PARM((&DATA))
+             CHGVAR     VAR(&PGMNAME) VALUE(%SST(&DATA 51 10))
+             CHGVAR     VAR(&PGMLIB) VALUE(%SST(&DATA 19 10))
+
+/* Retrieve job attributes */
+             RTVJOBA    JOB(&JOBNAME) USER(&JOBUSER) NBR(&JOBNBR) +
+                          TYPE(&JOBTYPE)
+
+             IF         COND(&FROMFILE *NE '*ALL') THEN(DO)
+
+/* Check library and file */
+                RTVOBJD    OBJ(&FROMLIB/&FROMFILE) OBJTYPE(*FILE) +
+                             OBJATR(&OBJATR)
+                MONMSG     MSGID(CPF9810) EXEC(DO) /* Library &1 not found. */
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('Library' *BCAT &FROMLIB +
+                                *BCAT 'not found.')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* MSGID(CPF9810) */
+                MONMSG     MSGID(CPF9812) EXEC(DO) /* File &1 in library &2 not found. */
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('File' *BCAT &FROMFILE +
+                                *BCAT 'not found in library' *BCAT +
+                                &FROMLIB *TCAT '.')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* MSGID(CPF9801) */
+
+                IF         COND(&OBJATR *NE 'PF') THEN(DO)
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('File' *BCAT &FROMFILE +
+                                *BCAT 'in library' *BCAT &FROMLIB *BCAT +
+                                'is not a physical file (' *CAT &OBJATR +
+                                *TCAT ').')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* COND(&OBJATR *NE 'PF') */
+
+/* Check file type */
+                CHGVAR     VAR(&QDBFIN) VALUE(&PFROMFILE)
+                CHGVAR     VAR(&QDBFOVR) VALUE('0')
+                CHGVAR     VAR(&QDBFSYS) VALUE('*LCL')
+
+                CALLSUBR   SUBR(VFYPFSRC) RTNVAL(&VFYPFSRC)
+
+                IF         COND(&VFYPFSRC *NE 0) THEN(DO)
+                   GOTO       CMDLBL(ERROR)
+                ENDDO      /* COND(&VFYPFSRC *NE 0) */
+
+                IF         COND((&FILEATRB *NE 'PF') *OR (&FILETYPE *NE +
+                             'SRC')) THEN(DO)
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('File' *BCAT &FROMFILE +
+                                *BCAT 'in library' *BCAT &FROMLIB *BCAT +
+                                'is not a source physical file (' *CAT +
+                                &FILEATRB *CAT '-' *CAT &FILETYPE *CAT ').')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* COND((&FILEATRB *NE 'PF') *OR (&FILETYPE *NE 'SRC') */
+
+             ENDDO      /* COND(&FROMFILE *NE '*ALL') */
+
+/* Check TODIR parameter */
+             CHGVAR     VAR(&STATPATH) VALUE(&PTODIR *TCAT &NULL)
+
+             CALLPRC    PRC('stat64') PARM((&STATPATH) (&STATBUFFER)) +
+                          RTNVAL(&STATRTNVAL)
+
+             IF         COND(&STATRTNVAL *NE 0) THEN(DO)
+                IF         COND(&PCRTDIR *EQ '*YES') THEN(DO)
+                   CRTDIR     DIR(&PTODIR) DTAAUT(*INDIR) OBJAUT(*INDIR)
+                ENDDO      /* COND(&PCRTDIR *EQ '*YES') */
+                ELSE       CMD(DO)
+                   CHGVAR     VAR(&MSGID) VALUE('CPFA0A9') /* Object not found */
+                   CALLPRC    PRC('strlen') PARM((&STATPATH)) RTNVAL(&LENINT)
+                   CHGVAR     VAR(%BIN(&MSGDTA 1 4)) VALUE(&LENINT)
+                   CHGVAR     VAR(%SST(&MSGDTA 5 &LENINT)) +
+                                VALUE(%SST(&PTODIR 1 &LENINT))
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* COND(&PCRTDIR *NE '*YES') */
+             ENDDO      /* COND(&STATRTNVAL *NE 0) */
+             ELSE       CMD(DO)
+                IF         COND(&STATOBJTYP *NE '*DIR') THEN(DO)
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('TODIR parameter must be +
+                                a directory (' *CAT &QUOTE *CAT +
+                                &STATOBJTYP *TCAT &QUOTE *CAT ').')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* COND(&STATOBJTYP *NE '*DIR') */
+             ENDDO      /* COND(&STATRTNVAL *EQ 0) */
+
+/* Check last &PTODIR char */
+             CALLPRC    PRC('strlen') PARM((&STATPATH)) RTNVAL(&LENINT)
+
+             IF         COND(%SST(&STATPATH &LENINT 1) *NE '/') THEN(DO)
+                CHGVAR     VAR(&TODIR) VALUE(&PTODIR *TCAT '/')
+             ENDDO      /* COND(%SST(&STATPATH &LENINT 1) *NE '/') */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&TODIR) VALUE(&PTODIR)
+             ENDDO      /* COND(%SST(&STATPATH &LENINT 1) *EQ '/') */
+
+/* Work with multiple PF-SRC */
+             IF         COND(&FROMFILE *EQ '*ALL') THEN(DO)
+
+/* Extract PF-SRC to be processed */
+                DLTF       FILE(QTEMP/PFSRCLIST)
+                MONMSG     MSGID(CPF2105) /* Object &1 in &2 type *&3 not found */
+
+                CHGVAR     VAR(&SQL) VALUE('CREATE TABLE QTEMP/PFSRCLIST +
+                             AS (SELECT DBXFIL FROM QADBXREF WHERE DBXTYP +
+                             = ''S'' AND DBXLIB = ''' *CAT &FROMLIB *TCAT +
+                             ''' ORDER BY DBXFIL) WITH DATA')
+
+                RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+/* Check PF-SRC to be processed */
+                RTVMBRD    FILE(QTEMP/PFSRCLIST) MBR(*FIRST) +
+                             NBRCURRCD(&NBRSELPFS)
+
+                IF         COND(&NBRSELPFS *EQ 0) THEN(DO)
+                   CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                   CHGVAR     VAR(&MSGDTA) VALUE('No PF-SRC found in +
+                                library' *BCAT &FROMLIB *TCAT '.')
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   GOTO       CMDLBL(CLEANUP)
+                ENDDO      /* COND(&NBRSELPFS *EQ 0) */
+
+/* Read PF-SRC file */
+                OVRDBF     FILE(PFSRCLIST) TOFILE(QTEMP/PFSRCLIST) +
+                             MBR(*FIRST) LVLCHK(*NO) OVRSCOPE(*CALLLVL) +
+                             SHARE(*NO)
+
+                DOWHILE    COND(&LOOP)
+                   RCVF       OPNID(PFSRC)
+                   MONMSG     MSGID(CPF0864) EXEC(LEAVE)
+                   SBMJOB     CMD(CPYSRC2IFS +
+                                FROMFILE(&FROMLIB/&PFSRC_DBXFIL) +
+                                MBR(&PMBR) LIBASPDEV(&PLIBASPDEV) +
+                                TODIR(&TODIR *TCAT &PFSRC_DBXFIL) +
+                                CRTDIR(&PCRTDIR) STMFEXT(&PSTMFEXT) +
+                                STMFCCSID(&PSTMFCCSID) +
+                                ENDLINFMT(&PENDLINFMT) AUT(&PAUT) +
+                                STMFTXT(&PSTMFTXT) REPORT(&PREPORT) +
+                                SLOC(&PSLOC)) JOB(&PFSRC_DBXFIL)
+                ENDDO      /* WHILE */
+
+                GOTO       CMDLBL(CLEANUP)
+
+             ENDDO      /* COND(&FROMFILE *EQ '*ALL') */
+
+/* Set STMF extension (1) */
+             SELECT
+                WHEN       COND(&PSTMFEXT *EQ '*NONE') THEN(DO)
+                   CHGVAR     VAR(&STMFEXT) VALUE(' ')
+                ENDDO      /* COND(&PSTMFEXT *EQ '*NONE') */
+                WHEN       COND(&PSTMFEXT *EQ '*DFT') THEN(DO)
+                   CHGVAR     VAR(&STMFEXT) VALUE('.MBR')
+                ENDDO      /* COND(&PSTMFEXT *EQ '*DFT') */
+                OTHERWISE  CMD(DO)
+                   IF         COND(%SST(&PSTMFEXT 1 1) *EQ '.') THEN(DO)
+                      CHGVAR     VAR(&STMFEXT) VALUE(&PSTMFEXT)
+                   ENDDO      /* COND(%SST(&PSTMFEXT 1 1) *EQ '.') */
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&STMFEXT) VALUE('.' *CAT &PSTMFEXT)
+                   ENDDO      /* COND(%SST(&PSTMFEXT 1 1) *NE '.') */
+                ENDDO      /* OTHERWISE */
+             ENDSELECT
+
+/* Set MBR path (1) */
+             IF         COND(&PLIBASPDEV *EQ '*SYSBAS') THEN(DO)
+                CHGVAR     VAR(&ASPPATH) VALUE(' ')
+             ENDDO      /* COND(&PLIBASPDEV *EQ '*SYSBAS') */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&ASPPATH) VALUE('/' *CAT &PLIBASPDEV)
+             ENDDO      /* COND(&PLIBASPDEV *NE '*SYSBAS') */
+
+/* Build member list in output file */
+             DLTF       FILE(QTEMP/MEMBERLIST)
+             MONMSG     MSGID(CPF2105) /* Object &1 in &2 type *&3 not found */
+
+             DSPFD      FILE(&FROMLIB/&FROMFILE) TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) OUTFILE(QTEMP/MEMBERLIST) +
+                          OUTMBR(*FIRST *REPLACE)
+
+/* Extract members to be processed */
+             DLTF       FILE(QTEMP/MBRLIST)
+             MONMSG     MSGID(CPF2105) /* Object &1 in &2 type *&3 not found */
+
+             CHGVAR     VAR(&SQL) VALUE('CREATE TABLE QTEMP.MBRLIST AS +
+                          (SELECT MBNAME, MBSEU2, MBMTXT, MBNRCD, MBCCEN, +
+                          MBCDAT, MBCTIM, MBUPDC, MBUPDD, MBUPDT FROM +
+                          QTEMP.MEMBERLIST WHERE MBNAME NOT LIKE '' %'' +
+                          AND MBNAME LIKE REPLACE(''' *CAT &PMBR *TCAT +
+                          ''', ''*'', ''%'') ORDER BY MBNAME) WITH DATA')
+
+             RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+/* Check the number of members to be processed */
+             RTVMBRD    FILE(QTEMP/MBRLIST) MBR(*FIRST) NBRCURRCD(&NBRSELMBR)
+
+             IF         COND(&NBRSELMBR *EQ 0) THEN(DO)
+                IF         COND((&JOBTYPE *EQ '1') *AND (&PCRTDIR *EQ +
+                             '*YES')) THEN(DO)
+                   RMVDIR     DIR(&PTODIR) SUBTREE(*NONE)
+                ENDDO      /* COND((&JOBTYPE *EQ '1') *AND (&PCRTDIR *EQ '*YES')) */
+                CHGVAR     VAR(&MSGID) VALUE('CPF9897')
+                CHGVAR     VAR(&MSGDTA) VALUE('No members selected.')
+                SNDPGMMSG  MSGID(&MSGID) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                             TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                GOTO       CMDLBL(CLEANUP)
+             ENDDO      /* COND(&NBRSELMBR *EQ 0) */
+
+/* Create report file */
+             IF         COND(&PREPORT *EQ '*YES') THEN(DO)
+
+                DLTF       FILE(QTEMP/REPORT)
+                MONMSG     MSGID(CPF2105) /* Object &1 in &2 type *&3 not found */
+
+                CRTPF      FILE(QTEMP/REPORT) RCDLEN(200)
+
+                IF         COND(&PSLOC *EQ '*NO') THEN(DO)
+                   CHGVAR     VAR(&SQL) VALUE('INSERT INTO QTEMP.REPORT +
+                                VALUES(''"LIBRARY";"FILE";"MEMBER";"TYPE";"T+
+                                EXT";"NBR_RCD";"CRT_TIMESTAMP";"LAST_CHG_TIM+
+                                ESTAMP";"IFS_SIZE";"IFS_ALLOC"'')')
+                ENDDO      /* COND(&PSLOC *EQ '*NO') */
+                ELSE       CMD(DO)
+                   CHGVAR     VAR(&SQL) VALUE('INSERT INTO QTEMP.REPORT +
+                                VALUES(''"LIBRARY";"FILE";"MEMBER";"TYPE";"T+
+                                EXT";"NBRRCD";"PHYSICAL_SLOC";"CRT_TIMESTAMP+
+                                ";"LAST_CHG_TIMESTAMP";"IFS_SIZE";"IFS_ALLOC+
+                                "'')')
+                ENDDO      /* COND(&PSLOC *NE '*NO') */
+
+                RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+                CHGVAR     VAR(&REPORT) VALUE(&TODIR *TCAT '#Report_' *CAT +
+                             &JOBNBR *TCAT '-' *CAT &JOBUSER *TCAT '-' +
+                             *CAT &JOBNAME *TCAT '.csv')
+
+                RMVLNK     OBJLNK(&STMF)
+                MONMSG     MSGID(CPFA0A9)
+
+/* Create temporary file to estimate physical SLOC for Cobol and RPG */
+                IF         COND(&PSLOC *EQ '*YES') THEN(DO)
+
+                   DLTF       FILE(QTEMP/SLOC)
+                   MONMSG     MSGID(CPF2105)
+
+                   CHGVAR     VAR(&SQL) VALUE('CREATE TABLE QTEMP/SLOC +
+                                (NUMBER NUMERIC(10, 0))')
+
+                   RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+                   CHGVAR     VAR(&SQL) VALUE('INSERT INTO +
+                                QTEMP/SLOC(NUMBER) VALUES(0)')
+
+                   RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+                   OVRDBF     FILE(SLOC) TOFILE(QTEMP/SLOC) MBR(*FIRST) +
+                                LVLCHK(*NO) OVRSCOPE(*CALLLVL)
+
+                ENDDO      /* COND(&PSLOC *EQ '*YES') */
+
+             ENDDO      /* COND(&PREPORT *EQ '*YES') */
+
+/* Read member list file */
+             OVRDBF     FILE(MBRLIST) TOFILE(QTEMP/MBRLIST) MBR(*FIRST) +
+                          LVLCHK(*NO) OVRSCOPE(*CALLLVL) SHARE(*NO)
+
+             DOWHILE    COND(&LOOP)
+
+                RCVF       OPNID(MBRINFO)
+                MONMSG     MSGID(CPF0864) EXEC(LEAVE)
+
+/* Count members */
+                CHGVAR     VAR(&MBRCNTX) VALUE(&MBRCNTX + 1)
+
+/* Send *INFO or *STATUS message indicating the member being processed */
+                CHGVAR     VAR(&MSGDTA) VALUE('Processing MBR(' *CAT +
+                             &MBRINFO_MBNAME *TCAT ') TYPE(' *CAT +
+                             &MBRINFO_MBSEU2 *TCAT ') NBRRCD(' *CAT +
+                             %CHAR(&MBRINFO_MBNRCD) *TCAT ') [' *CAT +
+                             %CHAR(&MBRCNTX) *TCAT '/' *CAT +
+                             %CHAR(&NBRSELMBR) *TCAT '|' *CAT +
+                             %CHAR(&NBRALLMBR) *TCAT ']')
+
+                IF         COND(&JOBTYPE *EQ '0') THEN(DO) /* Batch */
+                   SNDPGMMSG  MSGID(CPI8859) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*INFO)
+                ENDDO      /* COND(&JOBTYPE *EQ '0') */
+                ELSE       CMD(DO) /* Interactive */
+                   SNDPGMMSG  MSGID(CPI8859) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*EXT) TOMSGQ(*TOPGMQ) MSGTYPE(*STATUS)
+                ENDDO      /* COND(&JOBTYPE *NE '0') */
+
+/* Set MBR path (2) */
+                CHGVAR     VAR(&MBRPATH) VALUE(&ASPPATH *TCAT '/QSYS.LIB/' +
+                             *CAT &FROMLIB *TCAT '.LIB/' *CAT &FROMFILE +
+                             *TCAT '.FILE/' *CAT &MBRINFO_MBNAME *TCAT '.MBR')
+
+/* Set STMF extension (2) & STMF path */
+                IF         COND(&PSTMFEXT *NE '*TYPE') THEN(DO)
+                   CHGVAR     VAR(&STMF) VALUE(&TODIR *TCAT +
+                                &MBRINFO_MBNAME *TCAT &STMFEXT)
+                ENDDO      /* COND(&PSTMFEXT *NE '*TYPE') */
+                ELSE       CMD(DO)
+                   IF         COND(&MBRINFO_MBSEU2 *NE ' ') THEN(DO)
+                      CHGVAR     VAR(&STMF) VALUE(&TODIR *TCAT +
+                                   &MBRINFO_MBNAME *TCAT '.' *CAT +
+                                   &MBRINFO_MBSEU2)
+                   ENDDO      /* COND(&MBRINFO_MBSEU2 *NE ' ') */
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&STMF) VALUE(&TODIR *TCAT &MBRINFO_MBNAME)
+                   ENDDO      /* COND(&MBRINFO_MBSEU2 *EQ ' ') */
+
+                ENDDO      /* COND(&PSTMFEXT *EQ '*TYPE') */
+
+/* Copy MBR to STMF */
+                CPYTOSTMF  FROMMBR(&MBRPATH) TOSTMF(&STMF) +
+                             STMFOPT(*REPLACE) CVTDTA(*AUTO) +
+                             DBFCCSID(*FILE) STMFCCSID(&PSTMFCCSID) +
+                             ENDLINFMT(&PENDLINFMT) AUT(&PAUT)
+
+/* Set STMF description */
+                IF         COND(&PSTMFTXT *EQ '*YES') THEN(DO)
+                   CHGATR     OBJ(&STMF) ATR(*TEXT) VALUE(*NONE) +
+                                TEXT(&MBRINFO_MBMTXT)
+                ENDDO      /* COND(&PSTMFTXT *EQ '*YES') */
+
+/* Count members */
+                CHGVAR     VAR(&MBRCNT) VALUE(&MBRCNT + 1)
+
+/* Count records */
+                CHGVAR     VAR(&RCDCNT) VALUE(&RCDCNT + &MBRINFO_MBNRCD)
+
+/* Retrieve STMF information */
+                CHGVAR     VAR(&STATPATH) VALUE(&STMF *TCAT &NULL)
+                CALLPRC    PRC('stat64') PARM((&STATPATH) (&STATBUFFER)) +
+                             RTNVAL(&STATRTNVAL)
+                IF         COND(&STATRTNVAL *EQ 0) THEN(DO)
+                   CHGVAR     VAR(&IFSSIZ) VALUE(&IFSSIZ + &STATOBJSIZ)
+                   CHGVAR     VAR(&IFSALC) VALUE(&IFSALC + &STATALCSIZ)
+                ENDDO      /* COND(&STATRTNVAL *EQ 0) */
+                ELSE       CMD(DO)
+                   CHGVAR     VAR(&PRCNAME) VALUE('stat64')
+                   CHGVAR     VAR(&SUBRNAME) VALUE('MAIN')
+                   CHGVAR     VAR(&ERRORTEXT) VALUE(' (PRC' *BCAT &PRCNAME +
+                                *BCAT 'in' *BCAT &SUBRNAME *TCAT ')')
+                   GOTO       CMDLBL(ERROR)
+                ENDDO      /* COND(&STATRTNVAL *NE 0) */
+
+/* Update report file */
+                IF         COND(&PREPORT *EQ '*YES') THEN(DO)
+
+                   CHGVAR     VAR(&TEXTIN) VALUE(&MBRINFO_MBMTXT)
+                   CALLSUBR   SUBR(DUPQUOTE) RTNVAL(&DUPQUOTE)
+
+                   IF         COND(&MBRINFO_MBCCEN *EQ '0') THEN(DO)
+                      CHGVAR     VAR(&MBRCRTCEN) VALUE('19')
+                   ENDDO      /* COND(&MBRINFO_MBCCEN *EQ '0') */
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&MBRCRTCEN) VALUE('20')
+                   ENDDO      /* COND(&MBRINFO_MBCCEN *NE '0') */
+
+                   CHGVAR     VAR(&MBRCRTDAT) VALUE(&MBRCRTCEN *CAT +
+                                %SST(&MBRINFO_MBCDAT 1 2) *CAT '-' *CAT +
+                                %SST(&MBRINFO_MBCDAT 3 2) *CAT '-' *CAT +
+                                %SST(&MBRINFO_MBCDAT 5 2))
+
+                   CHGVAR     VAR(&MBRCRTTIM) VALUE(%SST(&MBRINFO_MBCTIM 1 +
+                                2) *CAT '.' *CAT %SST(&MBRINFO_MBCTIM 3 2) +
+                                *CAT '.' *CAT %SST(&MBRINFO_MBCTIM 5 2))
+
+                   CHGVAR     VAR(&MBRCRTTS) VALUE(&MBRCRTDAT *CAT '-' +
+                                *CAT &MBRCRTTIM *CAT '.000000')
+
+                   IF         COND(&MBRINFO_MBUPDC *EQ '0') THEN(DO)
+                      CHGVAR     VAR(&MBRCHGCEN) VALUE('19')
+                   ENDDO      /* COND(&MBRINFO_MBUPDC *EQ '0') */
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&MBRCHGCEN) VALUE('20')
+                   ENDDO      /* COND(&MBRINFO_MBUPDC *NE '0') */
+
+                   CHGVAR     VAR(&MBRCHGDAT) VALUE(&MBRCHGCEN *CAT +
+                                %SST(&MBRINFO_MBUPDD 1 2) *CAT '-' *CAT +
+                                %SST(&MBRINFO_MBUPDD 3 2) *CAT '-' *CAT +
+                                %SST(&MBRINFO_MBUPDD 5 2))
+
+                   CHGVAR     VAR(&MBRCHGTIM) VALUE(%SST(&MBRINFO_MBUPDT 1 +
+                                2) *CAT '.' *CAT %SST(&MBRINFO_MBUPDT 3 2) +
+                                *CAT '.' *CAT %SST(&MBRINFO_MBUPDT 5 2))
+
+                   CHGVAR     VAR(&MBRCHGTS) VALUE(&MBRCHGDAT *CAT '-' +
+                                *CAT &MBRCHGTIM *CAT '.000000')
+
+/* Estimate physical SLOC for Cobol and RPG */
+                   IF         COND(&PSLOC *EQ '*YES') THEN(DO)
+
+                      SELECT
+                         WHEN       COND((%SCAN('CBL' &MBRINFO_MBSEU2) *GT +
+                                      0) *OR (%SCAN('CBL' &PSTMFEXT) *GT +
+                                      0)) THEN(DO)
+                            CHGVAR     VAR(&SQL) VALUE('UPDATE QTEMP/SLOC +
+                                         SET NUMBER = (SELECT COUNT(*) +
+                                         FROM +
+                                         TABLE(QSYS2.IFS_READ(PATH_NAME => +
+                                         ''' *CAT &STMF *TCAT ''', +
+                                         END_OF_LINE => ''' *CAT +
+                                         %SST(&PENDLINFMT 2 5) *TCAT ''')) +
+                                         WHERE LINE LIKE ''_%'' AND NOT +
+                                         REGEXP_LIKE(LINE, ''^.{6}\*.*'') +
+                                         AND NOT REGEXP_LIKE(LINE, +
+                                         ''^.{6}\s.*process\s.*'', ''i''))')
+                            CHGVAR     VAR(&SLOC) VALUE('1')
+                         ENDDO      /* COND((%SCAN('CBL' &MBRINFO_MBSEU2) +
+                                      *LE 0) *OR (%SCAN('CBL' &PSTMFEXT) +
+                                      *LE 0))  */
+                         WHEN       COND((%SCAN('RPG' &MBRINFO_MBSEU2) *GT +
+                                      0) *OR (%SCAN('RPG' &PSTMFEXT) *GT +
+                                      0)) THEN(DO)
+                            CHGVAR     VAR(&SQL) VALUE('UPDATE QTEMP/SLOC +
+                                         SET NUMBER = (SELECT COUNT(*) +
+                                         FROM +
+                                         TABLE(QSYS2.IFS_READ(PATH_NAME => +
+                                         ''' *CAT &STMF *TCAT ''', +
+                                         END_OF_LINE => ''' *CAT +
+                                         %SST(&PENDLINFMT 2 5) *TCAT ''')) +
+                                         WHERE LINE LIKE ''_%'' AND NOT +
+                                         REGEXP_LIKE(LINE, ''^\*\*free'', +
+                                         ''i'') AND NOT REGEXP_LIKE(LINE, +
+                                         ''^\s*ctl-opt\s.*'', ''i'') AND +
+                                         NOT REGEXP_LIKE(LINE, +
+                                         ''^\s*\/\/(.)*'') AND NOT +
+                                         REGEXP_LIKE(LINE, +
+                                         ''^\s*\/[a-zA-Z]'', ''i'') AND +
+                                         NOT REGEXP_LIKE(LINE, +
+                                         ''^.{6}\*((?!\;).)*$''))')
+                            CHGVAR     VAR(&SLOC) VALUE('1')
+                         ENDDO      /* COND((%SCAN('RPG' &MBRINFO_MBSEU2) *GT 0) +
+                                        *OR (%SCAN('RPG' &PSTMFEXT) *GT 0)) */
+                         OTHERWISE  CMD(DO)
+                            CHGVAR     VAR(&SLOC) VALUE('0')
+                         ENDDO      /* OTHERWISE */
+                      ENDSELECT
+
+                      IF         COND(&SLOC) THEN(DO)
+                         RUNSQL     SQL(&SQL) COMMIT(*NONE)
+                         RCVF       OPNID(SLOC)
+                         CLOSE      OPNID(SLOC) /* RCVF */
+                         CHGVAR     VAR(&SQL) VALUE('INSERT INTO +
+                                      QTEMP.REPORT VALUES(''"' *CAT +
+                                      &FROMLIB *TCAT '";"' *CAT &FROMFILE +
+                                      *TCAT '";"' *CAT &MBRINFO_MBNAME +
+                                      *TCAT '";"' *CAT &MBRINFO_MBSEU2 +
+                                      *TCAT '";"' *CAT &TEXTOUT *TCAT +
+                                      '";"' *CAT %CHAR(&MBRINFO_MBNRCD) +
+                                      *TCAT '";"' *CAT %CHAR(&SLOC_NUMBER) +
+                                      *TCAT '";"' *CAT &MBRCRTTS *TCAT +
+                                      '";"' *CAT &MBRCHGTS *TCAT '";"' +
+                                      *CAT %CHAR(&STATOBJSIZ) *TCAT '";"' +
+                                      *CAT %CHAR(&STATALCSIZ) *TCAT '"'')')
+                      ENDDO      /* COND(&SLOC) */
+                      ELSE       CMD(DO)
+                         CHGVAR     VAR(&SLOC_NUMBER) VALUE(0)
+                         CHGVAR     VAR(&SQL) VALUE('INSERT INTO +
+                                      QTEMP.REPORT VALUES(''"' *CAT +
+                                      &FROMLIB *TCAT '";"' *CAT &FROMFILE +
+                                      *TCAT '";"' *CAT &MBRINFO_MBNAME +
+                                      *TCAT '";"' *CAT &MBRINFO_MBSEU2 +
+                                      *TCAT '";"' *CAT &TEXTOUT *TCAT +
+                                      '";"' *CAT %CHAR(&MBRINFO_MBNRCD) +
+                                      *TCAT '";" ";"' *CAT &MBRCRTTS *TCAT +
+                                      '";"' *CAT &MBRCHGTS *TCAT '";"' +
+                                      *CAT %CHAR(&STATOBJSIZ) *TCAT '";"' +
+                                      *CAT %CHAR(&STATALCSIZ) *TCAT '"'')')
+                      ENDDO      /* COND(*NOT &SLOC) */
+                      CHGVAR     VAR(&SLOCCNT) VALUE(&SLOCCNT + &SLOC_NUMBER)
+
+                   ENDDO      /* COND(&PSLOC *EQ '*YES') */
+
+                   ELSE       CMD(DO)
+
+                      CHGVAR     VAR(&SQL) VALUE('INSERT INTO QTEMP.REPORT +
+                                   VALUES(''"' *CAT &FROMLIB *TCAT '";"' +
+                                   *CAT &FROMFILE *TCAT '";"' *CAT +
+                                   &MBRINFO_MBNAME *TCAT '";"' *CAT +
+                                   &MBRINFO_MBSEU2 *TCAT '";"' *CAT +
+                                   &TEXTOUT *TCAT '";"' *CAT +
+                                   %CHAR(&MBRINFO_MBNRCD) *TCAT '";"' *CAT +
+                                   &MBRCRTTS *TCAT '";"' *CAT &MBRCHGTS +
+                                   *TCAT '";"' *CAT %CHAR(&STATOBJSIZ) +
+                                   *TCAT '";"' *CAT %CHAR(&STATALCSIZ) +
+                                   *TCAT '"'')')
+
+                   ENDDO      /* COND(&PSLOC *NE '*YES') */
+
+                   RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+                ENDDO      /* COND(&PREPORT *EQ '*YES') */
+
+             ENDDO      /* DOWHILE */
+
+/* Display run statistics */
+             CHGVAR     VAR(&SIZEDEC) VALUE(&MBRCNT)
+             CALLSUBR   SUBR(EDTNUM) RTNVAL(&EDTNUM)
+             IF         COND(&EDTNUM *EQ 0) THEN(DO)
+                CHGVAR     VAR(&MBRCNTCHAR) VALUE(&SIZECHAR)
+             ENDDO      /* COND(&EDTNUM *EQ 0) */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&MBRCNTCHAR) VALUE('0')
+             ENDDO      /* COND(&EDTNUM *NE 0) */
+
+             CHGVAR     VAR(&SIZEDEC) VALUE(&RCDCNT)
+             CALLSUBR   SUBR(EDTNUM) RTNVAL(&EDTNUM)
+             IF         COND(&EDTNUM *EQ 0) THEN(DO)
+                CHGVAR     VAR(&RCDCNTCHAR) VALUE(&SIZECHAR)
+             ENDDO      /* COND(&EDTNUM *EQ 0) */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&RCDCNTCHAR) VALUE('0')
+             ENDDO      /* COND(&EDTNUM *NE 0) */
+
+             CHGVAR     VAR(&SIZEDEC) VALUE(&IFSSIZ)
+             CALLSUBR   SUBR(EDTNUM) RTNVAL(&EDTNUM)
+             IF         COND(&EDTNUM *EQ 0) THEN(DO)
+                CHGVAR     VAR(&IFSSIZCHAR) VALUE(&SIZECHAR)
+             ENDDO      /* COND(&EDTNUM *EQ 0) */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&IFSSIZCHAR) VALUE('0')
+             ENDDO      /* COND(&EDTNUM *NE 0) */
+
+             CHGVAR     VAR(&SIZEDEC) VALUE(&IFSALC)
+             CALLSUBR   SUBR(EDTNUM) RTNVAL(&EDTNUM)
+             IF         COND(&EDTNUM *EQ 0) THEN(DO)
+                CHGVAR     VAR(&IFSALCCHAR) VALUE(&SIZECHAR)
+             ENDDO      /* COND(&EDTNUM *EQ 0) */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&IFSALCCHAR) VALUE('0')
+             ENDDO      /* COND(&EDTNUM *NE 0) */
+
+             IF         COND(&PSLOC *EQ '*YES') THEN(DO)
+                CHGVAR     VAR(&SIZEDEC) VALUE(&SLOCCNT)
+                CALLSUBR   SUBR(EDTNUM) RTNVAL(&EDTNUM)
+                IF         COND(&EDTNUM *EQ 0) THEN(DO)
+                   CHGVAR     VAR(&SLOCCNTCHR) VALUE(&SIZECHAR)
+                ENDDO      /* COND(&EDTNUM *EQ 0) */
+                ELSE       CMD(DO)
+                   CHGVAR     VAR(&SLOCCNTCHR) VALUE('0')
+                ENDDO      /* COND(&EDTNUM *NE 0) */
+             ENDDO      /* COND(&PSLOC *EQ '*YES') */
+
+/* Create CSV report */
+             IF         COND(&PREPORT *EQ '*YES') THEN(DO)
+
+                IF         COND(&PSLOC *EQ '*NO') THEN(DO)
+                   CHGVAR     VAR(&SQL) VALUE('INSERT INTO QTEMP.REPORT +
+                                VALUES(''"";"";"' *CAT %CHAR(&MBRCNT) +
+                                *TCAT '";"";"";"' *CAT %CHAR(&RCDCNT) +
+                                *TCAT '";"";"";"' *CAT %CHAR(&IFSSIZ) +
+                                *TCAT '";"' *CAT %CHAR(&IFSALC) *TCAT '"'')')
+                ENDDO      /* COND(&PSLOC *EQ '*NO') */
+                ELSE       CMD(DO)
+                   CHGVAR     VAR(&SQL) VALUE('INSERT INTO QTEMP.REPORT +
+                                VALUES(''"";"";"' *CAT %CHAR(&MBRCNT) +
+                                *TCAT '";"";"";"' *CAT %CHAR(&RCDCNT) +
+                                *TCAT '";"' *CAT %CHAR(&SLOCCNT) *TCAT +
+                                '";"";"";"' *CAT %CHAR(&IFSSIZ) *TCAT +
+                                '";"' *CAT %CHAR(&IFSALC) *TCAT '"'')')
+                ENDDO      /* COND(&PSLOC *NE '*NO') */
+
+                RUNSQL     SQL(&SQL) COMMIT(*NONE)
+
+                CPYTOSTMF  +
+                             FROMMBR('/QSYS.LIB/QTEMP.LIB/REPORT.FILE/REPORT+
+                             .MBR') TOSTMF(&REPORT) STMFOPT(*REPLACE) +
+                             CVTDTA(*AUTO) DBFCCSID(*FILE) +
+                             STMFCCSID(&PSTMFCCSID) ENDLINFMT(&PENDLINFMT) +
+                             AUT(&PAUT)
+
+                DLTF       FILE(QTEMP/REPORT)
+                MONMSG     MSGID(CPF0000)
+
+             ENDDO      /* COND(&PREPORT *EQ '*YES') */
+
+             IF         COND(&PSLOC *EQ '*NO') THEN(DO)
+                CHGVAR     VAR(&MSGDTA) VALUE('Member processed:' *BCAT +
+                             %TRIML(&MBRCNTCHAR) *BCAT '- Records:' *BCAT +
+                             %TRIML(&RCDCNTCHAR) *BCAT '- IFS size +
+                             (byte):' *BCAT %TRIML(&IFSSIZCHAR) *BCAT '- +
+                             IFS allocated size (byte):' *BCAT +
+                             %TRIML(&IFSALCCHAR))
+             ENDDO      /* COND(&PSLOC *EQ '*NO') */
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&MSGDTA) VALUE('Member processed:' *BCAT +
+                             %TRIML(&MBRCNTCHAR) *BCAT '- Records:' *BCAT +
+                             %TRIML(&RCDCNTCHAR) *BCAT '- Cobol SLOC:' +
+                             *BCAT %TRIML(&SLOCCNTCHR) *BCAT '- IFS size +
+                             (byte):' *BCAT %TRIML(&IFSSIZCHAR) *BCAT '- +
+                             IFS allocated size (byte):' *BCAT +
+                             %TRIML(&IFSALCCHAR))
+             ENDDO      /* COND(&PSLOC *NE '*NO') */
+
+             SNDPGMMSG  MSGID(CPI8859) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                          TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) MSGTYPE(*INFO)
+
+             GOTO       CMDLBL(CLEANUP)
+
+ ERROR:
+             RCVMSG     PGMQ(*SAME) MSGTYPE(*LAST) RMV(*YES) MSG(&MSG) +
+                          MSGLEN(&MSGLEN) SECLVL(&SECLVL) +
+                          SECLVLLEN(&SECLVLLEN) MSGDTA(&MSGDTA) +
+                          MSGDTALEN(&MSGDTALEN) MSGID(&MSGID) +
+                          RTNTYPE(&RTNTYPE) MSGF(&MSGF) SNDMSGFLIB(&MSGFLIB)
+
+             CHGVAR     VAR(&PGMERROR) VALUE('1')
+
+ CLEANUP:
+             DLTF       FILE(QTEMP/MEMBERLIST)
+             MONMSG     MSGID(CPF0000)
+
+             CLOSE      OPNID(PFSRC) /* RCVF */
+             MONMSG     MSGID(CPF0000)
+
+             CLOSE      OPNID(SLOC) /* RCVF */
+             MONMSG     MSGID(CPF0000)
+
+             CLOSE      OPNID(MBRINFO) /* RCVF */
+             MONMSG     MSGID(CPF0000)
+
+             DLTOVR     FILE(*ALL) LVL(*) /* OVRDBF */
+             MONMSG     MSGID(CPF0000)
+
+             DLTF       FILE(QTEMP/PFSRCLIST)
+             MONMSG     MSGID(CPF0000)
+
+             DLTF       FILE(QTEMP/SLOC)
+             MONMSG     MSGID(CPF0000)
+
+             DLTF       FILE(QTEMP/MBRLIST)
+             MONMSG     MSGID(CPF0000)
+
+/* Goto exit */
+             IF         COND(&PGMERROR *EQ '0') THEN(DO)
+                GOTO       CMDLBL(RETURN)
+             ENDDO      /* COND(&PGMERROR *EQ '0') */
+
+/* Call error subroutine */
+             CALLSUBR   SUBR(ERROR)
+
+ RETURN:
+             RETURN
+
+/* SUBR(VFYPFSRC): Start *********************************************/
+
+ VFYPFSRC:   SUBR       SUBR(VFYPFSRC)
+
+                CHGVAR     VAR(&SUBRNAME) VALUE('VFYPFSRC')
+                CHGVAR     VAR(&VFYPFSRC) VALUE(0)
+
+                CHGVAR     VAR(&QDBFFMTTYP) VALUE('*INT')
+
+                CALLSUBR   SUBR(RSTAPIERR) RTNVAL(&RSTAPIERR)
+
+                CALL       PGM(QDBRTVFD) PARM(&FILD0100 &FILD0100L +
+                             &QDBFOUT 'FILD0100' &QDBFIN &QDBFRCDFMT +
+                             &QDBFOVR &QDBFSYS &QDBFFMTTYP &APIERROR)
+
+                IF         COND(&AEBYTAVL *NE 0) THEN(DO)
+                   SNDPGMMSG  MSGID(&AEEXCPID) MSGF(QCPFMSG) +
+                                MSGDTA(&AEEXCPDTA) TOPGMQ(*SAME (*)) +
+                                TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   CHGVAR     VAR(&APINAME) VALUE('QDBRTVFD')
+                   CHGVAR     VAR(&ERRORTEXT) VALUE(' (API' *BCAT &APINAME +
+                                *BCAT 'in' *BCAT &SUBRNAME *TCAT ')')
+                   CHGVAR     VAR(&VFYPFSRC) VALUE(-1)
+                ENDDO      /* COND(&AEBYTAVL *NE 0) */
+                ELSE       CMD(DO)
+/* Test type of file: On -> LF, Off -> PF */
+                   CHGVAR     VAR(&BIT_POS) VALUE(2)
+                   CALLPRC    PRC('_TSTBTS') PARM((&QDBFHFLG) (&BIT_POS +
+                                *BYVAL)) RTNVAL(&BIT_POS)
+                   CHGVAR     VAR(&BIT_2_ON) VALUE(&BIT_POS *EQ 1)
+/* Test FILETYPE: On -> SRC, Off -> DTA */
+                   CHGVAR     VAR(&BIT_POS) VALUE(4)
+                   CALLPRC    PRC('_TSTBTS') PARM((&QDBFHFLG) (&BIT_POS +
+                                *BYVAL)) RTNVAL(&BIT_POS)
+                   CHGVAR     VAR(&BIT_4_ON) VALUE(&BIT_POS *EQ 1)
+                   IF         COND(&BIT_2_ON) THEN(DO)
+                      CHGVAR     VAR(&FILEATRB) VALUE('LF')
+                   ENDDO
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&FILEATRB) VALUE('PF')
+                   ENDDO
+                   IF         COND(&BIT_4_ON) THEN(DO)
+                      CHGVAR     VAR(&FILETYPE) VALUE('SRC')
+                   ENDDO
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(&FILETYPE) VALUE('DTA')
+                   ENDDO
+                   CHGVAR     VAR(&NBRALLMBR) VALUE(&QDBFHMNUM)
+                   CHGVAR     VAR(&VFYPFSRC) VALUE(0)
+                ENDDO      /* COND(&AEBYTAVL *EQ 0) */
+
+             ENDSUBR    RTNVAL(&VFYPFSRC)
+
+/* SUBR(VFYPFSRC): End ***********************************************/
+
+/* SUBR(DUPQUOTE): Start *********************************************/
+
+ DUPQUOTE:   SUBR       SUBR(DUPQUOTE)
+
+                CHGVAR     VAR(&SUBRNAME) VALUE('DUPQUOTE')
+                CHGVAR     VAR(&DUPQUOTE) VALUE(0)
+
+                CHGVAR     VAR(&TEXTOUT) VALUE(' ')
+                CHGVAR     VAR(&TEXT_J) VALUE(1)
+
+                DOFOR      VAR(&TEXT_I) FROM(1) TO(%SIZE(&TEXTIN))
+                   IF         COND(%SST(&TEXTIN &TEXT_I 1) *NE &QUOTE) THEN(DO)
+                      CHGVAR     VAR(%SST(&TEXTOUT &TEXT_J 1)) +
+                                   VALUE(%SST(&TEXTIN &TEXT_I 1))
+                      CHGVAR     VAR(&TEXT_J) VALUE(&TEXT_J + 1)
+                   ENDDO      /* COND(%SST(&TEXTIN &TEXT_I 1) *NE &QUOTE) */
+                   ELSE       CMD(DO)
+                      CHGVAR     VAR(%SST(&TEXTOUT &TEXT_J 2)) +
+                                   VALUE(&QUOTE *CAT &QUOTE *CAT &QUOTE +
+                                   *CAT &QUOTE)
+                      CHGVAR     VAR(&TEXT_J) VALUE(&TEXT_J + 2)
+                   ENDDO      /* COND(%SST(&TEXTIN &TEXT_I 1) *EQ &QUOTE) */
+                   IF         COND(&TEXT_J *GT %SIZE(&TEXTOUT)) THEN(DO)
+                      LEAVE
+                   ENDDO      /* COND(&TEXT_J *GT %SIZE(&TEXTOUT)) */
+                ENDDO      /* DOFOR */
+
+             ENDSUBR    RTNVAL(&DUPQUOTE)
+
+/* SUBR(DUPQUOTE): End ***********************************************/
+
+/* SUBR(EDTNUM): Start ***********************************************/
+
+ EDTNUM:     SUBR       SUBR(EDTNUM)
+
+                CHGVAR     VAR(&SUBRNAME) VALUE('EDTNUM')
+                CHGVAR     VAR(&EDTNUM) VALUE(0)
+
+                CHGVAR     VAR(%BIN(&SRCVARPCSN)) VALUE(15)
+
+                CHGVAR     VAR(%BIN(&SRCVARDEC)) VALUE(0)
+
+                CALL       PGM(QECCVTEC) PARM(&EDTMASK &EDTMASKLEN +
+                             &RCVVARLEN &ZROBAL &EDTCODE &CURRENCY +
+                             &SRCVARPCSN &SRCVARDEC &APIERROR)
+
+                CALL       PGM(QECEDT) PARM(&SIZECHAR &RCVVARLEN &SIZEDEC +
+                             '*PACKED' &SRCVARPCSN &EDTMASK &EDTMASKLEN +
+                             &ZROBAL &APIERROR)
+
+             ENDSUBR    RTNVAL(&EDTNUM)
+
+/* SUBR(EDTNUM): End *************************************************/
+
+/* SUBR(RSTAPIERR): Start ********************************************/
+
+ RSTAPIERR:  SUBR       SUBR(RSTAPIERR)
+
+                CHGVAR     VAR(&SUBRNAME) VALUE('RSTAPIERR')
+                CHGVAR     VAR(&RSTAPIERR) VALUE(0)
+
+                CHGVAR     VAR(&AEBYTPRO) VALUE(0)
+                CHGVAR     VAR(&AEBYTAVL) VALUE(0)
+
+             ENDSUBR    RTNVAL(&RSTAPIERR)
+
+/* SUBR(RSTAPIERR): End **********************************************/
+
+/* SUBR(ERROR): Start ************************************************/
+
+ ERROR:      SUBR       SUBR(ERROR)
+
+                CHGVAR     VAR(&SUBRNAME) VALUE('ERROR')
+
+                IF         COND(&ERROR) THEN(RETURN)
+
+                CHGVAR     VAR(&ERROR) VALUE('1')
+
+/* 02: Diagnostic - 15: Escape (exception already handled at time of RCVMSG) +
+                  - 17: Escape (exception not handled at time of RCVMSG) */
+                IF         COND((&RTNTYPE *EQ '02') *OR (&RTNTYPE *EQ +
+                             '15') *OR (&RTNTYPE *EQ '17')) THEN(DO)
+/* Send DIAGNOSTIC message */
+                   SNDPGMMSG  MSGID(&MSGID) MSGF(&MSGFLIB/&MSGF) +
+                                MSGDTA(&MSGDTA) TOPGMQ(*PRV (*)) +
+                                TOMSGQ(*TOPGMQ) MSGTYPE(*DIAG)
+                   MONMSG     MSGID(CPF0000)
+                ENDDO      /* COND((&RTNTYPE *EQ '02') *OR (&RTNTYPE *EQ +
+                             '15') *OR (&RTNTYPE *EQ '17')) */
+
+/* Send ESCAPE message */
+                IF         COND(&PGMERROR) THEN(DO)
+                   CHGVAR     VAR(&MSGDTA) VALUE(&PGMNAME *BCAT 'ended +
+                                abnormally' *CAT %TRIMR(&ERRORTEXT))
+                   SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&MSGDTA) +
+                                TOPGMQ(*PRV (*)) TOMSGQ(*TOPGMQ) +
+                                MSGTYPE(*ESCAPE)
+                ENDDO      /* COND(&PGMERROR) */
+
+             ENDSUBR    RTNVAL(0)
+
+/* SUBR(ERROR): End **************************************************/
+
+ ENDPGM:
+             ENDPGM

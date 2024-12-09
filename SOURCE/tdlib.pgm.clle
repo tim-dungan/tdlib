@@ -1,0 +1,18 @@
+pgm
+  addlible DBU11    *last
+  monmsg cpf9999
+  addlible TDDEV    *last
+  monmsg cpf9999
+  addlible SQLTOOLS *last
+  monmsg cpf9999
+  addlible OLFILE5  *last
+  monmsg cpf9999
+  addlible CONPGM   *last
+  monmsg cpf9999
+  addlible OLPGM5D  *last
+  monmsg cpf9999
+  addlible WMSPGM2  *last
+  monmsg cpf9999
+  addlible YDPGM3   *last
+  monmsg cpf9999
+endpgm

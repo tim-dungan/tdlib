@@ -1,0 +1,2 @@
+       dcl-s   CustomerID_t       packed (5)       template;
+       dcl-s   ProductID_t        char   (6)       template;

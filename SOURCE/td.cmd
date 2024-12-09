@@ -1,0 +1,1 @@
+cmd prompt('init libl')

@@ -1,0 +1,1552 @@
+      *%METADATA                                                       *
+      * %TEXT field reference YDPGM3                                   *
+      *%EMETADATA                                                      *
+     A**********************************************************************
+     A*         FLDREF  -  FIELD REFERENCE FILE FOR YARD CONTROL SYSTEM
+     A**********************************************************************
+     A*
+     A*  ALL FILES IN ALPHABETICAL ORDER
+     A*
+     A*           AUTH    -    A       AUTHORIZATION FILE
+     A*           BULD    -    B       BUILDING CODE
+     A*           CARR    -    C       CARRIER FILE
+     A*           CCAR    -    CR      AUTHORIZED CHASSIS CARRIER
+     A*           CONA    -    CA      CONSOLIDATION ACCOUNTS
+     A*           CSID    -    ID      CUSTOMER ID'S
+     A*           DAMD    -    DD      DAMAGE DESCRIPTIONS
+     A*           DAMG    -    DG      DAMAGE REPORT FILE
+     A*           DTFN    -    DT      DOM TRANS FACILITY NOT WORKFILE
+     A*           EQIP    -    E       EQUIPMENT FILE
+     A*           FACL    -    MF*PRE  FACILITY FILE
+     A*           FGRP    -    FG      FACILITY GROUP FILE
+     A*           FGRD    -    FD      FACILITY GROUP DETAIL FILE
+     A*           FTRN    -    T       FACILTIY TRANSFER FILE
+     A*           IMCL    -    IM      BROKER CODE IMCL SCAC CODES
+     A*           INCD    -    I       INCIDENT FILE
+     A*           GPDT    -    D       GATE PASS DETAIL FILE
+     A*           GPHD    -    P       GATE PASS FILE
+     A*           LOCT    -    L       YARD LOCATION FILE
+NC01 A*           MDYR    -    MY      MACY DAILY YARD
+     A*           PLAN    -    PL      PLANNED DESTINATIONS
+     A*           REL#    -    N       RELEASE NUMBERS
+     A*           RELS    -    R       RELEASE FILE
+     A*           RELX    -    X       RELEASE X-REF FILE
+     A*           PLAN    -    PL      PLANNED DESTINATIONS
+     A*           SECR    -    SE      SECURITY FILE
+     A*           SWDR    -    DR      SWITCHER DOOR NOT AVAILABLE
+     A*           SWJB    -    S       SWITCHER JOBS
+     A*           SWLO    -    SX      SWITCHER JOB LOCATION EXTENSION FILE
+     A*           SWLG    -    SL      SWITCHER LOG
+     A*           SWOI    -    O       SWITCHER OUTBOUND/INBOUND
+     A*           SWPD    -    PD      SWITCHER PRODUCTIVITY
+     A*           TJXA    -    TA      TJMAXX CROSS REF #1
+     A*           TJXB    -    TB      TJMAXX CROSS REF #2
+     A*           TJXF    -    TF      TJMAXX CROSS OUTPUT FILE
+     A*           TJCG    -    TG      TJMAXX YARD WORKFILE
+     A*           TJJB    -    TH      TJMAXX YARD WORKFILE  FOR JBHU
+     A*           TLOS    -    LS      LEVEL OF SERVICE FILE
+     A*           TRAL    -    TR      TRAILER FILE
+     A*           TYRD    -    TY      TABLE FILE
+     A*           UNIT    -    UN      UNIT MASTER FILE
+     A*           USER    -    U       USER FILE
+     A*           RELX    -    X       RELS X-REF FILE
+     A*           YARD    -    Y       YARD INVENTORY FILE
+     A*           YARDLOC -    LA      YARD LOCATION ADDRESSES
+     A*           YARDDEST-    YD      YARD DESTINATION
+     A*           YDAU    -    YU      YARD AUDIT FILE
+     A*           YDLG    -    YL      PROGRAM USAGE LOG FILE
+     A*           YDXX    -    XX      YARD USAGE STATISTICS
+     A*           YDEML   -    YE      EMAIL ADDRESSES FOR YARD
+     A*           YWHO    -    OD      YARD WHODUNIT FILE
+     A*           RFID    -    RF      RFID CROSS REFERENCE FILE
+     A*           AUTHB   -     B      INBOUND FUNCTION - BY FACILITY
+     A*                                BUILDING
+     A*           FCAR    -    RF      FACILITY/CARRIER  FILE
+     A*           FCST    -    RF      FACILITY/CUSTOMER FILE
+     A**********************************************************************
+     A*
+     A*  ALL FILES IN ORDER BY SUFFIX
+     A*
+     A*           AUTH    -    A       AUTHORIZATION FILE
+     A*           BULD    -    B       BUILDING CODE
+     A*           CARR    -    C       CARRIER FILE
+     A*           CONA    -    CA      CONSOLIDATION ACCOUNTS
+     A*           CCAR    -    CR      AUTHORIZED CHASSIS CARRIER
+     A*           GPDT    -    D       GATE PASS DETAIL FILE
+     A*           SWDR    -    DR      SWITCHER DOOR NOT AVAILABLE
+     A*           DAMD    -    DD      DAMAGE DESCRIPTIONS
+     A*           DAMG    -    DG      DAMAGE REPORT FILE
+     A*           DTFN    -    DT      DOM TRANS FACILITY NOT WORKFILE
+     A*           EQIP    -    E       EQUIPMENT FILE
+     A*           FACL    -    MF*PRE  FACILITY FILE
+     A*           FGRD    -    FD      FACILITY GROUP DETAIL FILE
+     A*           FGRP    -    FG      FACILITY GROUP
+     A*                   -    G
+     A*                   -    H
+     A*           INCD    -    I       INCIDENT FILE
+     A*           CSID    -    ID      CUSTOMER ID'S
+     A*           IMCL    -    IM      BROKER CODE IMCL SCAC CODES
+     A*                   -    J
+     A*                   -    K
+     A*           LOCT    -    L       LOCATION FILE
+     A*           YARDLOC -    LA      YARD LOCATION ADDRESSES
+     A*           TLOS    -    LS      LEVEL OF SERVICE FILE
+     A*                   -    M
+     A*           REL#    -    N       RELEASE NUMBERS
+     A*           SWOI    -    O       SWITCHER OUTBOUND/INBOUND
+     A*           YWHO    -    OD      WHODUNIT FILE
+     A*           GPHD    -    P       GATE PASS HEADER FILE
+     A*           SWPD    -    PD      SWITCHER PRODUCTIVITY
+     A*           PLAN    -    PL      PLANNED DESTINATIONS
+     A*                   -    Q
+     A*           RELS    -    R       RELEASE FILE
+     A*           SWJB    -    S       YARD SWITCHER JOBS
+     A*           SECR    -    SE      SECURITY FILE
+     A*           SWLG    -    SL      SWITCHER LOG
+     A*           SWLO    -    SX      SWITCHER JOB LOCATION EXTENSION FILE
+     A*           FTRN    -    T       FACILTIY TRANSFER FILE
+     A*           TJXA    -    TA      TJMAXX CROSS REF #1
+     A*           TJXB    -    TB      TJMAXX CROSS REF #2
+     A*           TJXF    -    TF      TJMAXX CROSS OUTPUT FILE
+     A*           TJCG    -    TG      TJMAXX YARD WORKFILE
+     A*           TJJB    -    TH      TJMAXX YARD WORKFILE  FOR JBHU
+     A*           TRAL    -    TR      TRAILER FILE
+     A*           TYRD    -    TY      TABLE FILE
+     A*           USER    -    U       USER FILE
+     A*           UNIT    -    UN      UNIT MASTER FILE
+     A*                   -    V
+     A*                   -    X
+     A*           YDXX    -    XX      YARD USAGE STATISTICS
+     A*           YARD    -    Y       YARD INVENTORY FILE
+     A*           YARDDEST-    YD      YARD DESTINATION
+     A*           YDEML   -    YE      EMAIL ADDRESSES FOR YARD
+     A*           YDLG    -    YL      PROGRAM USAGE LOG FILE
+     A*           YDAU    -    YU      YARD AUDIT FILE
+     A*           RAIL    -    Z       RAILBOX ONLY CARRIER
+     A**********************************************************************
+     A          R FLDREFFM
+     A*
+     A**********************************************************************
+     A*           AUTH      -                AUTHORIZATION FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*         R AUTHFM
+     A*
+     A            ACRECA         1          COLHDG('ACTIVE' 'CODE')
+     A*                                        IN USE FOR 3RD PARTY WORKE FORCE
+     A            LSTNMA        12          COLHDG('LAST NAME')
+     A            FIRNMA        12          COLHDG('FISRT NAME')
+     A            NAMEEA        20          COLHDG('EMPLOYEE' 'NAME')
+     A            OPERAA         5          COLHDG('OPERATOR' 'ID')
+     A            PASWDA        10          COLHDG('PASSWORD')
+     A            GROUPA         6          COLHDG('GROUP')
+     A            FACL#A         3          COLHDG('FACILITY')
+     A            USRTYA         2          COLHDG('USER' 'TYPE')
+     A*                                       AD = ADMINISTRATOR
+     A*                                       FP = FACILITY PERSONEL
+     A*                                       SW = SWITCHER
+     A*                                       SS = SECURITY SUPERVISOR
+     A*                                       YM = YARDMASTER
+     A*                                       GP = GATE PERSONEL
+     A*                                       SP = SHOP PERSONEL
+     A            STATUA         1          COLHDG('STATUS')
+     A*                                       ' '= ACTIVE
+     A*                                       'T'= TERMINATED
+     A            SWTYPA         1          COLHDG('SWITCHER' 'TYPE')
+     A*                                        S = SHOP SWITCHER
+     A*                                        Y = YARD SWITCHER
+     A*                                          = NOT A SWITCHER
+     A* SWITCHER BUILDING/UNIT ASSIGNMENT
+     A            SWBLDA         1          COLHDG('SWITCHER' 'BLDG')
+     A            UNIT#A         8          COLHDG('SWITCHER' 'UNIT')
+     A* USERS IN FAC GROUP CAN SWITCH FACILITIES
+     A            FCGRPA         4          COLHDG('FACILITY' 'GROUP')
+     A* LAST USED DATE
+     A            LUSEDA          L         COLHDG('LAST USED' 'DATE')
+     A* FROM SECR FILE FOR RELEASES - ONENCE COMBINED
+     A            SECLVA         1  0       COLHDG('SECURITY' 'LEVEL')
+     A*                                       0 = LOWEST PROGRAM ACCESS
+     A*                                       9 = HIGHEST PROGRAM ACCESS
+     A**********************************************************************
+     A*           BULD      -                BULDING CODE FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0002500 000500 00005
+     A*         R BULDFM
+     A*
+     A            ACRECB         1          COLHDG('ACTIVE' 'CODE')
+     A            FACL#B         3          COLHDG('FACILITY')
+     A            BLDCDB         1          COLHDG('BUILDING' 'CODE')
+     A            LOCTNB        25          COLHDG('LOCATION' 'NAME')
+     A            ADDRSB        25          COLHDG('ADDRESS')
+     A            CITYSB        16          COLHDG('CITY')
+     A            STATEB         2          COLHDG('STATE')
+     A            ZIPCDB         5  0       COLHDG('ZIP' 'CODE')
+     A*
+     A            TMSCDB         6          COLHDG('TMS' 'LOC CODE')
+     A**********************************************************************
+     A*           CARR      -                CARRIER FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0002500 000500 00005
+     A*         R CARRFM
+     A*
+     A            ACRECC         1          COLHDG('ACTIVE' 'CODE')
+     A*                                     "*" = SHOW RELEASE IN OLPGM5D/OL578S
+     A            CARRCC         4          COLHDG('CARRIER' 'CODE')
+     A            CNAMEC        25          COLHDG('CARRIER' 'NAME')
+     A*
+     A* CARRIER IS NRS OR AFFILIATED HOUSE CARRIER
+     A            REQTYC         1          COLHDG('HOUSE' 'CARRIER')
+     A*                                        Y = YES
+     A**********************************************************************
+     A*           CCAR      -                AUTHORIZED CHASSIS CARRIER
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*         R CCARFM
+     A*
+     A            ACRECCR        1          COLHDG('ACTIVE' 'CODE')
+     A            CARRCCR        4          COLHDG('CARRIER' 'CODE')
+     A*
+     A**********************************************************************
+     A*           CONA      -                CONSOLIDATION ACCTS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0002500 000500 00005
+     A*         R CONAFM
+     A*
+     A            ACRECCA        1          COLHDG('ACTIVE' 'CODE')
+     A            ACCT#CA        5  0       COLHDG('ACCT#')
+     A            NAMEACA       20          COLHDG('ACCT' 'NAME')
+     A            DESTNCA       20          COLHDG('DESTINATION')
+     A            BUILDCA        1          COLHDG('BLDG' 'CODE')
+     A            GROUPCA        2          COLHDG('GROUP' 'CODE')
+     A            ACRGRCA        1          COLHDG('ACTIVE' 'GROUP')
+     A* CHANGED ON 6/2006 TO MAKE MANIFEST FILE COMPLIANT TO RELS SYSTM
+     A            QUALICA        3  0       COLHDG('QUALIF' 'DESTN')
+     A            DIST#CA        5          COLHDG('DC' 'NUMBER')
+     A**********************************************************************
+     A*           DAMD      -                DAMAGE DESCRIPTIONS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000100 000050 00005
+     A*         R DAMDFM
+     A*
+     A            ACRECDD        1          COLHDG('ACTIVE' 'CODE')
+     A            SENO#DD        3  0       COLHDG('SEQ#')
+     A* DESCRIPTION
+     A            DESCRDD       30          COLHDG('DESCRIPTION')
+     A            SHDESDD       10          COLHDG('SHORT' 'DESC')
+     A            GROUPDD        2          COLHDG('GROUP')
+     A**********************************************************************
+     A*           DAMG      -                DAMAGE REPORT
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0050000 001000 00005
+     A*         R DAMGFM
+     A*
+     A            ACRECDG        1          COLHDG('ACTIVE' 'CODE')
+     A            DAMG#DG        7  0       COLHDG('DAMAGES' 'REF#')
+     A* INBOUND INFO
+     A            FACL#DG        3          COLHDG('FACILITY')
+     A            REPDTDG        7  0       COLHDG('REPORT' 'DATE')
+     A            REPTMDG        4  0       COLHDG('REPORT' 'TIME')
+     A            INBOPDG        5          COLHDG('INBOUND' 'OPER')
+     A            DRIVEDG       25          COLHDG('INBOUND DRIVER')
+     A* EQUIPMENT DAMAGED
+     A            CARRCDG        4          COLHDG('CARRIER')
+     A            EQUIPDG       10          COLHDG('EQUIP #')
+     A            ETYPEDG        1          COLHDG('EQUIP' 'TYPE')
+     A* DAMAGE REPORTED - ARRAY OF 70 ITEMS/LOCATIONS
+     A            LOCATDG       70          COLHDG('DAMAGES')
+     A*                                         I = INBOUND
+     A*                                         O = OUTBOUND
+     A*
+     A* REMARKS
+     A            REMRKDG       50          COLHDG('REMARKS')
+     A**********************************************************************
+     A*           EQIP      -                TRAILER EQUIPMENT FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0005000 001000 00003
+     A*         R EQIPFM
+     A*
+     A            ACRECE         1          COLHDG('ACTIVE' 'CODE')
+     A            EQUIPE         8          COLHDG('UNIT' 'NUMBER')
+     A            ETYPEE         1          COLHDG('EQUIPMENT' 'TYPE')
+     A*                                        T = TRAILER
+     A*                                        P = TRACTOR (POWER)
+     A*                                        B = BOGEY
+     A* REGISTRATION/GROUP
+     A            SERL#E        18          COLHDG('SERIAL' 'NUMBER')
+     A            PLATEE        10          COLHDG('LICENSE' 'PLATE')
+     A            CONCDE         2S 0       COLHDG('GROUP' 'CODE')
+     A*
+     A* VEHICLE DESCRIPTION
+     A            VYEARE         4  0       COLHDG('VEHICLE' 'YEAR')
+     A            VMAKEE         8          COLHDG('VEHICLE' 'MAKE')
+     A            LENGTE         2S 0       COLHDG('TRAILER' 'LENGTH')
+     A            HEIGHE         3  0       COLHDG('TRAILER' 'HEIGHT')
+     A            WIDTHE         3  0       COLHDG('TRAILER' 'WIDTH')
+     A            TTYPEE         2          COLHDG('TRAILER' 'TYPE')
+     A*                                        RF = REFERIGERATION
+     A*                                        DV = DRY VAN
+     A*                                        BR = ROPED
+     A*                                        PP = PUPS
+     A*                                        DF = DROP FRAME
+     A*                                        HT = HEATED
+     A*
+     A* DISPATCH
+     A            LOCATE         2          COLHDG('LAST' 'LOCATION')
+     A            LOCASE         4          COLHDG('LOCATION' 'SUFFIX')
+     A            STATUE         2          COLHDG('STATUS')
+     A*                                       IT = IN TRANSIT
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A*                                       SP = SPOTTED
+     A*                                       DL = DEADLINED
+     A*                                       OS = OUT OF SERVICE
+     A*                                       OR = OUTSIDE REPAIR
+     A*                                       ST = STORAGE
+     A*                                       MS = MISSING
+     A*                                       WL = WORKING LOCAL
+     A*                                       YD = IN YARD
+     A*                                       FS = FOR SALE
+     A            STAYYE         2S 0       COLHDG('STATUS' 'DATE')
+     A            STAMME         2S 0       COLHDG('STATUS' 'DATE')
+     A            STADDE         2S 0       COLHDG('STATUS' 'DATE')
+     A*
+     A            REPYYE         2S 0       COLHDG('LAST' 'REPORTED')
+     A            REPMME         2S 0       COLHDG('LAST' 'REPORTED')
+     A            REPDDE         2S 0       COLHDG('LAST' 'REPORTED')
+     A            REMRKE        23          COLHDG('REMARKS')
+     A*****************************************************************
+     A*           FACL      -               FACILITY FILE
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000100 000025 00003
+     A*         R FACLFM
+     A*
+     A            MFACL          3          COLHDG('FACILITY')
+     A            MFACLN        30          COLHDG('FACILITY NAME')
+     A            MFACLA1       30          COLHDG('FACILITY ADDRESS')
+     A            MFACLCT       10          COLHDG('FACILITY CITY')
+     A            MFACLST        2          COLHDG('FACILITY STATE')
+     A            MFACLZP        5          COLHDG('FACILITY ZIP')
+     A            MLDPREQ        1          COLHDG('GP REQUIRED FOR LD')
+     A            MMTPREQ        1          COLHDG('GP REQUIRED FOR MT')
+     A            MHEPREQ        1          COLHDG('HSE MT PASS REQD')
+     A            SJDESTO        1          COLHDG('SWJOB DET OPT')
+      *                                       ' ' = YD031S ASSIGNS
+      *                                       'S' = SWITCHER PICKS SLOT
+     A            MOFFSET        3S 0       COLHDG('TIME ZONE OFFSET')
+     A            MOFFSETS       1          COLHDG('TZONE OFFSET SIGN')
+     A            MRFID          1          COLHDG('USING' 'RFID')
+     A            MRLSFAC        3          COLHDG('RELEASE FACIL - O/B')
+     A            PWRIN          1          COLHDG('POWER' 'INB')
+      *                                       ' ' = NO POWER INBOUND
+      *                                       'H' = HOUSE POWER ONLY
+      *                                       'O' = NON-NRS POWER ONLY
+      *                                       'A' = ALL POWER INBOUND
+     A            DRLIC          1          COLHDG('DRV' 'LIC' 'REQ')
+     A*****************************************************************
+     A*           FGRD      -               FACILITY GROUP DETAIL
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0005000 000250 00003
+     A*         R FGRDFM
+     A*
+     A            GRIDFD         4          COLHDG('GROUP ID')
+     A            FACLFD         3          COLHDG('FACILITY')
+     A*****************************************************************
+     A*           FGRP      -               FACILITY GROUP FILE
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0005000 000250 00003
+     A*         R FGRPFM
+     A*
+     A            GRIDFG         4          COLHDG('GROUP ID')
+     A            GRNMFG        32          COLHDG('GROUP NAME')
+     A            FACLFG        30          COLHDG('FACILITIES')
+      *                                     EVERY 3 BYTES REPRESENT
+      *                                     A FACILTY CODE; 10 MAX
+     A**********************************************************************
+     A*           FTRN      -                FACILITY TRANSFER
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R FTRNFM
+     A*
+     A            ACRECT         1          COLHDG('ACTIVE' 'CODE')
+     A            PASS#T         7  0       COLHDG('PASS #')
+     A            CARRCT         4          COLHDG('CARRIER')
+     A            EQUIPT        10          COLHDG('EQUIP #')
+     A            FACL1T         3          COLHDG('FACILITY 1')
+     A            IBCART         4          COLHDG('ORIG' 'SCAC')
+     A            IBTRAT         8          COLHDG('ORIG' 'TRAC')
+     A            IBDATT         7  0       COLHDG('DATE' 'INBOUND')
+     A            IBTIMT         4  0       COLHDG('TIME' 'INBOUND')
+     A            DATECT         7  0       COLHDG('DATE' 'CREATED')
+     A            TIMECT         4  0       COLHDG('TIME' 'CREATED')
+     A*
+     A            FACL2T         3          COLHDG('FACILITY 2')
+     A            SECART         4          COLHDG('SECOND' 'SCAC')
+     A            SETRAT         8          COLHDG('SECOND' 'TRAC')
+     A            DATEIT         7  0       COLHDG('DATE' 'IN')
+     A            TIMEIT         4  0       COLHDG('TIME' 'IN')
+     A*
+     A            MISCIT        15          COLHDG('MISC')
+     A            FLAG1T         1          COLHDG('FLAG1')
+     A            FLAG2T         1          COLHDG('FLAG2')
+     A*
+     A            STATUT         1          COLHDG('STATUS')
+     A*                                            = PENDING TRANS
+     A*                                          C = COMPLETE
+     A*                                          R = REINSTATED
+     A*****************************************************************
+     A*           GPDT      -               GATE PASS FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   5000000 025000 00003
+     A*         R GPDTFM
+     A*
+     A            ACRECD         1          COLHDG('ACTIVE CODE')
+     A            FACL#D         3          COLHDG('FACILITY')
+     A            PASS#D         7  0       COLHDG('PASS #')
+     A* INBOUND INFO
+     A            INBDTD         7  0       COLHDG('I/B DATE')
+     A            INBTMD         4  0       COLHDG('I/B TIME')
+     A            INBCAD         4          COLHDG('I/B' 'CARRIER')
+     A            INBSTD         2          COLHDG('I/B' 'STATUS')
+     A            INBCUD         2          COLHDG('I/B' 'CUST')
+     A* OUTBOUND
+     A            OUTDTD         7  0       COLHDG('OUT DATE')
+     A            OUTTMD         4  0       COLHDG('OUT TIME')
+     A*
+     A* EQUIPMENT DATA
+     A            CARRCD         4          COLHDG('CARRIER')
+     A            EQUIPD        10          COLHDG('EQUIP #')
+     A            ETYPED         1          COLHDG('EQUIP' 'TYPE')
+     A            SEAL1D         8          COLHDG('SEAL 1')
+     A            SEAL2D         8          COLHDG('SEAL 2')
+     A            STATUD         2          COLHDG('STATUS')
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A            OUTCUD         2          COLHDG('O/B' 'CUST')
+     A* INBOUND DAMAGES FLAG, REFERENCE, RFID#, OPER ID
+     A            INBDGD         1          COLHDG('DAMAGES' 'FOUND')
+     A*                                        Y = DAMAGE(S) FOUND
+     A            INBD#D         7  0       COLHDG('DAMAGES' 'REF#')
+     A            INBOPD         5          COLHDG('INB' 'OPER')
+     A            INBRFD         6  0       COLHDG('NOT USED')
+     A            INBRFTD        6          COLHDG('RFID#')
+     A*
+     A* INBOUND DRIVER DATA - NEW 2022
+     A            TRACTD         8          COLHDG('I/B TRACT')
+     A            LICNOD        15          COLHDG('DRIVER LIC #')
+     A            LICSTD         2          COLHDG('LICENSE' 'STATE')
+     A            DNAMED        15          COLHDG('I/B DRIVER NAME')
+     A**********************************************************************
+     A*           GPHD      -               GATE PASS FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   3000000 025000 00003
+     A*         R GPHDFM
+     A*
+     A            ACRECP         1          COLHDG('ACTIVE CODE')
+     A            PASS#P         7  0       COLHDG('PASS #')
+     A            PASDTP         7  0       COLHDG('PASS DATE')
+     A            PASTMP         4  0       COLHDG('PASS TIME')
+     A*
+     A            FACL#P         3          COLHDG('FACILITY')
+     A            AUTIDP         5          COLHDG('AUTH' 'ID')
+     A            GROUPP         6          COLHDG('GROUP' 'ID')
+     A            DRIVEP        15          COLHDG('DRIVER NAME')
+     A            TRACTP        10          COLHDG('TRACTOR')
+     A            CARRCP         4          COLHDG('CARRIER')
+     A            DESTNP        20          COLHDG('DESTINATION')
+     A            CUSTCP         2          COLHDG('CUST' 'CODE')
+     A            CHGIDP         5          COLHDG('CHANGE' 'ID')
+     A*
+     A* OUTBOUND
+     A            OUTDTP         7  0       COLHDG('OUT DATE')
+     A            OUTTMP         4  0       COLHDG('OUT TIME')
+     A            OUTOPP         5          COLHDG('OUTBOUND OPER')
+     A*
+     A* STATUS :
+     A            STATUP         1          COLHDG('STATUS')
+     A*                                         = ASSIGNED
+     A*                                       E = EXECUTED/LEFT YARD
+     A*                                       F = FAILED
+     A* DRIVERS LICENSE - NEW 2022
+     A            LICNOP        15          COLHDG('DRIVER LIC #')
+     A            LICSTP         2          COLHDG('LICENSE' 'STATE')
+     A**********************************************************************
+     A*           INCD      -                INCIDENT FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R INCDFM
+     A*
+     A            ACRECI         1          COLHDG('ACTIVE' 'CODE')
+     A            INCD#I         5  0       COLHDG('INCIDENT' 'NUMBER')
+     A            FACL#I         3          COLHDG('FACILITY')
+     A            REPBYI         5          COLHDG('REPORTED' 'BY')
+     A            REPDTI         7  0       COLHDG('DATE' 'REPORTED')
+     A            REPTMI         4  0       COLHDG('TIME' 'REPORTED')
+     A            SJOB#I         7  0       COLHDG('SWITCHER' 'JOB#')
+     A            CARRCI         4          COLHDG('CARRIER' 'CODE')
+     A            EQUIPI        10          COLHDG('UNIT #')
+     A****        ETYPEI         1          COLHDG('UNIT TYPE')
+     A*                                        T = TRAILER
+     A*                                        C = CONTAINER
+     A            PRBCDI         2          COLHDG('PROBLEM' 'CODE')
+     A*                                       SWITCHER PROBLEM CODES:
+     A*                                        OE = ORIGIN EMPTY
+     A*                                        OW = ORIGIN W/WRONG TRL
+     A*                                        DO = DEST OCCUPIED
+     A*                                        DB = DEST BLOCKED
+     A*                                        OS = OUT OF SERVICE
+     A*                                       OTHER PROBLEM CODES:
+     A*                                        YC = YARD CORRECTION
+     A*                                        MS = MISCELANIOS
+     A*                                        ID = INBOUND PROBLEM
+     A            STATSI         1          COLHDG('STATUS')
+     A*                                        ' ' = UNRESOLVED
+     A*                                        'R' = RESOLVED
+     A* RESOLUTION
+     A            RESCDI         1          COLHDG('RESOLUTION' 'CODE')
+     A*                                          = OPEN
+     A*                                        X = PROBLEM JOB CANCELLD
+     A*                                        D = NEW DEST ASSIGNED
+     A*                                        M = MANUAL
+     A            RESBYI         5          COLHDG('RESOLVED' 'BY')
+     A            RESDTI         7  0       COLHDG('DATE' 'RESOLVED')
+     A            RESTMI         4  0       COLHDG('TIME' 'RESOLVED')
+     A            ERRBYI        15          COLHDG('ERROR' 'BY')
+     A            REMRKI        35          COLHDG('REMARKS')
+     A*
+     A**********************************************************************
+     A*           IMCL      -                IMCL BROKER SCAC CODES.
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0001000 000100 00005
+     A*         R IMCLFM
+     A*
+     A            ACRECIM        1          COLHDG('ACTIVE CODE')
+     A            CARRCIM        4          COLHDG('CARRIER' 'CODE')
+     A*
+     A**********************************************************************
+     A*           LOCT      -                YARD LOCATION FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0050000 001000 00005
+     A*         R LOCTFM
+     A*
+     A            ACRECL         1          COLHDG('ACTIVE CODE')
+     A            FACL#L         3          COLHDG('FACILITY')
+     A            YARD#L         1          COLHDG('YARD #')
+     A            LTYPEL         1          COLHDG('LOCATION' 'TYPE')
+     A*                                       D = DOOR
+     A*                                       R = ROW
+     A*                                       S = SLOT
+     A*                                       U = UNSLOTTED
+     A            LOCT#L         3  0       COLHDG('LOCATION #')
+     A            ZONE#L         3          COLHDG('ZONE')
+     A            TYPERL         1          COLHDG('TYPE' 'RESTRICT')
+     A*                                       BLANK = NONE
+     A*                                       P = ONLY PUPS
+     A*                                       S = ONLY STRAIGHT JOBS
+     A*                                       C = CONTAINERS ONLY
+     A            STRESL         2          COLHDG('STATUS' 'RESTRICT')
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A*                                       OS = OUT OF SERVICE
+     A*                                       ST = STORAGE
+     A            USEPRL         1  0       COLHDG('USE' 'PRIORITY')
+     A*                                       1 = MOST FREQUENT
+     A*                                       2 = LESS FREQUENT
+     A*                                       3 = LEAST FREQUENT
+     A*
+     A* OCCUPIED WITH
+     A            CARRCL         4          COLHDG('CARRIER')
+     A            EQUIPL        10          COLHDG('UNIT #')
+     A            ETYPEL         1          COLHDG('UNIT TYPE')
+     A*                                        T = TRAILER
+     A*                                        C = CONTAINER
+     A*                                        S = STRAIGHT JOB
+     A*                                        R = RAIL CONT
+     A*
+     A* LOCATION STATUS
+     A            STAT1L         1          COLHDG('LOCATION' 'STATUS')
+     A*                                          = EMPTY
+     A*                                        O = OCCUPIED
+     A*                                        X = UNAVAILABLE
+     A*                                        R = RESERVED
+     A            STADTL         7  0       COLHDG('STATUS' 'DATE')
+     A* ADDED SEPT 2002 - LENGTH RESTRICTION
+     A            LNRESL         2  0       COLHDG('LENGTH' 'RESTRICT')
+     A* ADDED OCT  2005 - LOCATION PRIORITY
+     A            LOCPRL         1  0       COLHDG('LOC.' 'PRIORITY')
+     A*                                       1 = TOP PRIORITY
+     A*
+GP01 A* THIS SLOT WITH LOCT#L IS BLOCKED BY SLOT# BLKBSL
+GP01 A*   IF BLKBSL > 0
+GP01 A*   SO ANY SWITHCER JOB AGAINST SLOT LOCT#L WILL BECOME PENDING
+GP01 A*      UNTIL A JOB HAS MOVED TRAILER FROM SLOT# BLKBSL
+GP01 A*
+GP01 A            BLKBSL         3  0       COLHDG('BLOCKED BY' 'SLOT#')
+GP01 A*
+GP01 A*   NEXT FIELD IS FOR ROWS AND UNSLOTTED ONLY - LOCTYPE = R OR U
+     A            ROWMXL         3  0       COLHDG('ROW' 'MAXIMUM')
+     A            CURESL         2          COLHDG('CUST' 'RESTRICT')
+     A*   IB CARRIER RESTRICTION
+     A            IBRESL         4          COLHDG('IB CARR' 'RESTRICT')
+     A**********************************************************************
+     A*           PLAN      -                PLANNED DESTINATIONS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R PLANFM
+     A*
+     A            ACRECPL        1          COLHDG('ACTIVE' 'CODE')
+     A            PLAN#PL        7  0       COLHDG('PLAN' 'NUMBER')
+     A            FACL#PL        3          COLHDG('FACILITY')
+     A* REQUESTED BY
+     A            AUTORPL        5          COLHDG('REQUESTED BY')
+     A            GROUPPL        6          COLHDG('REQUESTER' 'GROUP')
+     A*
+     A            EQUIPPL       10          COLHDG('UNIT' 'NUMBER')
+     A            ECARRPL        4          COLHDG('CARRIER')
+     A* PLANNED DESTINATION LOCATION OF EQUIPMENT
+     A            DYRD#PL        1          COLHDG('DEST' 'YARD#')
+     A            DLTYPPL        1          COLHDG('DEST' 'LOC.TYPE')
+     A*                                       D = DOOR
+     A*                                       S = SLOT
+     A*                                       U = UNSLOTTED
+     A            DLOC#PL        3  0       COLHDG('DEST' 'LOC#')
+     A            EDDATPL        7  0       COLHDG('DATE' 'ENTERED')
+     A            EDTIMPL        4  0       COLHDG('TIME' 'ENTERED')
+     A*
+     A**********************************************************************
+     A*           REL#      -                RELEASE NUMBERS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0099999 000000 00000
+     A*         R REL#FM
+     A*
+     A            RELS#N         5  0       COLHDG('RELEASE #')
+     A**********************************************************************
+     A*           RELS      -                RELEASE FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 003000 00005
+     A*         R RELSFM
+     A*
+     A            ACRECR         1          COLHDG('ACTIVE' 'CODE')
+     A            RELS#R         5  0       COLHDG('RELEASE #')
+     A            TRAILR        11          COLHDG('TRAILER')
+     A            ACCT#R         5  0       COLHDG('ACCT#')
+     A            BUILDR         1          COLHDG('BUILD' 'CODE')
+     A            CARRCR         4          COLHDG('CARRIER' 'CODE')
+     A* CREATION INFO
+     A            CREATR         5          COLHDG('CREATOR' 'ID')
+     A            CRDATR         7  0       COLHDG('CREATE' 'DATE')
+     A            CRTIMR         4  0       COLHDG('CREATE' 'TIME')
+     A* OUTBOUND INFO
+     A            RELIDR         5          COLHDG('RELEASE' 'ID')
+     A            OBDATR         7  0       COLHDG('OUT DATE')
+     A            OBTIMR         4  0       COLHDG('OUT TIME')
+     A*                                      NOTE:CYYMMDD FORM
+     A*
+     A            STATUR         1          COLHDG('STATUS')
+     A*                                         = ISSUED
+     A*                                       F = FAILED
+     A*                                       R = RELEASED
+     A*                                       C = CANCELLED
+     A* FOR E-MAIL INFO
+     A            FACL#R         3          COLHDG('FACILITY')
+     A*                                      NB = NORTH BERGEN
+     A*                                      CA = CALIFORNIA
+     A*                                      NC = NORTH CAROLINA
+     A*                                      FL = FLORIDA
+     A            COMMTR        20          COLHDG('COMMENTS')
+     A            EMSTAR         1          COLHDG('E-MAIL STATUS')
+     A*                                         = OPEN RELEASE
+     A*                                       E = E-MAILED RELEASE
+     A* ADDITIONAL FIELDS
+     A            TOQTYR         5  0       COLHDG('QTY')
+     A            TOWGTR         5  0       COLHDG('WEIGHT')
+     A            PRO##R        13          COLHDG('PRO#')
+     A*           ACCQUR         1  0       COLHDG('ACCT# DESTN')
+     A* DO NOT FORGET TO COMPILE
+     A            ACCQUR         3  0       COLHDG('ACCT# DESTN')
+     A**********************************************************************
+     A*           RELX      -                RELEASE X-REF FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0025000 002500 00005
+     A*         R RELXFM
+     A*
+     A            ACRECX         1          COLHDG('ACTIVE' 'CODE')
+     A            CARRCX         4          COLHDG('CARRIER' 'CODE')
+     A            ACCT#X         5  0       COLHDG('ACCT#')
+     A            EMAILX        40          COLHDG('E-MAIL ADDRESS')
+     A            XREFRX        10          COLHDG('X-REF' 'BRODERICK')
+     A**********************************************************************
+     A*           SECR      -                PROGRAM SECURITY FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*         R SECRFM
+     A*
+     A            ACRECSE        1          COLHDG('ACTIVE' 'CODE')
+     A*                                       Y = ALLOW NRS RLS INQUIRY
+     A            ONAMESE       25          COLHDG('OPERATOR' 'NAME')
+     A            OPERASE        5          COLHDG('OPERATOR' 'ID')
+     A            PASWDSE        8          COLHDG('PASSWORD')
+     A            SECLVSE        1  0       COLHDG('SECURITY' 'LEVEL')
+     A*                                       0 = LOWEST PROGRAM ACCESS
+     A*                                       9 = HIGHEST PROGRAM ACCESS
+     A*
+     A**********************************************************************
+     A*           SWJB      -                SWITCHER JOBS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   5000000 005000 00003
+     A*         R SWJBFM
+     A*
+     A            ACRECS         1          COLHDG('ACTIVE' 'CODE')
+     A*                                       * = MANUALLY ASSIGNED
+     A            SJOB#S         7  0       COLHDG('JOB' 'NUMBER')
+     A            FACL#S         3          COLHDG('FACILITY')
+     A* REQUESTED BY
+     A            AUTORS         5          COLHDG('REQUESTED BY')
+     A            GROUPS         6          COLHDG('REQUESTER' 'GROUP')
+     A*
+     A            SWTIDS         5          COLHDG('SWICHER' 'ID')
+     A            SWTYPS         1          COLHDG('SWITHCER' 'TYPE')
+     A*                                       'Y' = REGULAR            ILER
+     A*                                       'S' = SHOP SWITCHER
+     A            MOVTYS         2          COLHDG('JOB' 'TYPE')
+     A*                                       'BE' = BRING AN EMPTY TRAILER
+     A*                                       'BS' = BRING TO SHOP
+     A*                                       'BT'= BRING SPECIFIC TRAILER
+     A*                                       'RS' = REMOVE FROM SHOP
+     A*                                       'RT'= REMOVE SPECIFIC TRAILER
+     A*                                       'PP'= REMOVE PUP TRAILER
+     A*                                       'CU'= CLEAN UP YARD
+     A*    ONLY FOR LA ADDED ON 09/05 BY AD
+     A*                                       'TT'= TRAILER TRANSFER
+     A            EQUIPS        10          COLHDG('UNIT' 'NUMBER')
+     A            ECARRS         4          COLHDG('EQUIPMENT' 'CARRIER')
+     A* ORIGIN LOCATION OF EQUIPMENT
+     A            OYRD#S         1          COLHDG('YARD #')
+     A            OLTYPS         1          COLHDG('LOCATION' 'TYPE')
+     A*                                       D = DOOR
+     A*                                       S = SLOT
+     A*                                       U = UNSLOTTED
+     A            OLOC#S         3  0       COLHDG('LOCATION #')
+     A            OZONES         3          COLHDG('ORIGIN' 'ZONE')
+     A* DESTINATION LOCATION OF EQUIPMENT
+     A            DYRD#S         1          COLHDG('DEST' 'YARD#')
+     A            DLTYPS         1          COLHDG('DEST' 'LOC.TYPE')
+     A*                                       D = DOOR
+     A*                                       S = SLOT
+     A*                                       U = UNSLOTTED
+     A            DLOC#S         3  0       COLHDG('DEST' 'LOC#')
+     A*
+     A* PRIORITY STATUS
+     A            STATPS         1          COLHDG('PRIORITY' 'STATUS')
+     A*                                        ' ' = REGULAR
+     A*                                        'T' = TOP PRIORITY
+     A* STATUS OF SWITCHER JOB
+     A            STATJS         1          COLHDG('JOB' 'STATUS')
+     A*                                        ' ' = OPEN
+     A*                                        'A' = ASSIGNED
+     A*                                        'C' = COMPLETED
+     A*                                        'X' = CANCELLED
+     A*                                        'H' = PENDING DELETE
+     A*                                             (SEE YD030S,YD031S)
+GP01 A*                                        'P' = PENDING UNTIL
+GP01 A*                                              ANOTHER SWITCHER JOB
+GP01 A*                                              HAS COMPLETED
+GP01 A*                                              (THIS SJOB#S WILL BE
+GP01 A*                                               IN FLD PNDJ#S IN THAT
+GP01 A*                                               SWITHCER JOB THAT HAS
+GP01 A*                                               TO COMPLETE
+GP01 A*                                               (ALSO SEE FIELD
+GP01 A*                                                BLKBSL IN LOCT )
+     A            EDDATS         7  0       COLHDG('DATE' 'ENTERED')
+     A            EDTIMS         4  0       COLHDG('TIME' 'ENTERED')
+     A            SDDATS         7  0       COLHDG('DATE' 'STARTED')
+     A            SDTIMS         4  0       COLHDG('TIME' 'STARTED')
+     A            CDDATS         7  0       COLHDG('DATE' 'COMPLETED')
+     A            CDTIMS         4  0       COLHDG('TIME' 'COMPLETED')
+     A*
+     A* Fields rcarrs,rlengs,rflets,rttyps are requested type of
+     A* trailers when user requested BE (Bring any empty trailer)
+     A            RCARRS         4          COLHDG('REQUESTED' 'CARRIER')
+     A            RLENGS         2S 0       COLHDG('REQUESTED' 'TR LENGTH')
+     A            RFLETS         6          COLHDG('REQUESTED' 'TR FLEET')
+     A            RTTYPS         2          COLHDG('REQUESTED' 'TR TYPE')
+     A*                                        RF = REFERIGERATION
+     A*                                        DV = DRY VAN
+     A*                                        BR = ROPED
+     A*                                        PP = PUPS
+     A*                                        DF = DROP FRAME
+     A*                                        HT = HEATED
+     A* SWITCHER BUILDING ASSIGNMENT
+     A            SWBLDS         1          COLHDG('SWITCHER' 'BLDG')
+     A* TRAILER DOOR TYPE ADDED ON 02/08 BY AD
+     A            DOORTS         1          COLHDG('TRAILER DOOR TYPE')
+     A*                                          = UNDEFINED
+     A*                                        R = ROLLUP
+     A*                                        S = SWING
+GP01 A*  PENDING SWITCHER JOB# THAT HAS TO BE MADE AVAILABLE TO
+GP01 A*  SWITCHERS AS SOON AS THIS SJOB#S IS DONE
+GP01 A            PNDJ#S         7  0       COLHDG('PENDING' 'JOB#')
+     A*  HOOKED TIME - WHEN ORIGIN EQUIPMENT IS HOOKED -
+     A            HKDATS         7  0       COLHDG('DATE' 'HOOKED')
+     A            HKTIMS         4  0       COLHDG('TIME' 'HOOKED')
+     A**********************************************************************
+     A*           SWLG      -                SWITCHER LOG
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R SWLGFM
+     A*
+     A            ACRECSL        1          COLHDG('ACTIVE' 'CODE')
+     A            FACL#SL        3          COLHDG('FACILITY')
+     A            SWTIDSL        5          COLHDG('SWICHER' 'ID')
+     A            REACDDL        1          COLHDG('REASON' 'CODE')
+     A*                                        N = NO JOBS AVAILABLE
+     A*                                        E = END
+     A*                                        B = BREAK
+     A*                                        L = LUNCH
+     A*                                        S = SHOPYARD
+     A*                                        F = FUEL
+     A*                                        P = PUPS
+     A*                                        P = YARDWORK
+     A            DATELSL        7  0       COLHDG('DATE')
+     A            TIMELSL        4  0       COLHDG('TIME')
+     A**********************************************************************
+     A*           SWLO      -            SWITCHER JOBS LOCATION EXTENSION FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   5000000 005000 00003
+     A*         R SWLOFM
+     A*
+     A            ACRECSX        1          COLHDG('ACTIVE' 'CODE')
+     A*                                       * = MANUALLY ASSIGNED
+     A            SJOB#SX        7  0       COLHDG('JOB' 'NUMBER')
+     A            FACL#SX        3          COLHDG('FACILITY')
+     A            PREF#SX        9          COLHDG('PINC REF #')
+     A            NOTESSX       20          COLHDG('NOTES')
+     A            DTTMCSX         Z         COLHDG('CREATED TIMESTAMP')
+     A            DTTMRSX         Z         COLHDG('RETURNED TIMESTAMP')
+     A            SPOT#SX        5          COLHDG('SPOT NBR')
+     A            LATITSX       10  7       COLHDG('LATITUDE')
+     A            LONGISX       10  7       COLHDG('LONGITUDE')
+     A            LSTUPSX         Z         COLHDG('LAST UPDATED')
+     A**********************************************************************
+     A*           SWOI      -                SWITCHER OUTBOUND
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R SWOIFM
+     A*
+     A            ACRECO         1          COLHDG('ACTIVE' 'CODE')
+     A            SJOB#O         7  0       COLHDG('JOB' 'NUMBER')
+     A            FACL#O         3          COLHDG('FACILITY')
+     A            DATEOO         7  0       COLHDG('DATE' 'OUT')
+     A            TIMEOO         4  0       COLHDG('TIME' 'OUT')
+     A            YARDOO         1          COLHDG('YARD' 'OUT')
+     A            DATEIO         7  0       COLHDG('DATE' 'IN')
+     A            TIMEIO         4  0       COLHDG('TIME' 'IN')
+     A            YARDIO         1          COLHDG('YARD' 'IN')
+     A            STATIO         1          COLHDG('STATUS')
+     A*                                          O = OUTBOUND
+     A*                                          I = INBOUND/DONE
+     A**********************************************************************
+     A*           SWPD      -                SWITCHER PRODUCTIVITY
+     A*                                      WORK FILE(USED BY YD300R)
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 005000 00003
+     A*         R SWPDFM
+     A*
+     A            ACRECPD        1          COLHDG('ACTIVE' 'CODE')
+     A            FACL#PD        3          COLHDG('FACILITY')
+     A            SJOB#PD        7  0       COLHDG('JOB' 'NUMBER')
+     A            SWTIDPD        5          COLHDG('SWICHER' 'ID')
+     A            REACDPD        1          COLHDG('REASON' 'CODE')
+     A*                                        N = NO JOBS AVAILABLE   ILER
+     A*                                        E = END                 ILER
+     A*                                        B = BREAK               ILER
+     A*                                        L = LUNCH               ILER
+     A*                                        S = TO SHOP             ILER
+     A            DATELPD        7  0       COLHDG('DATE')
+     A            TIMELPD        4  0       COLHDG('TIME')
+     A**********************************************************************
+     A*           USER      -                USER FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*         R USERFM
+     A*
+     A            ACRECU         1          COLHDG('ACTIVE' 'CODE')
+     A            USRIDU        10          COLHDG('USER' 'ID')
+     A            FACL#U         3          COLHDG('FACILITY')
+     A            OUTQUU        10          COLHDG('OUTPUT' 'QUEUE')
+     A**********************************************************************
+     A*           TLOS      -                LEVEL OF SERVICE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0100000 000500 00005
+     A*         R TLOSFM
+     A*
+     A            ACRECLO        1          COLHDG('ACTIVE' 'CODE')
+     A            FACL#LO        3          COLHDG('FACILITY')
+     A            YARDLO         1          COLHDG('INITIAL' 'YARD')
+     A            CUSTCLO        2          COLHDG('CUST' 'CODE')
+     A            CARRLO         4          COLHDG('CARRIER')
+     A            EQUIPLO       10          COLHDG('UNIT #')
+     A            INDTELO        8  0       COLHDG('IN DATE')
+     A            INTIMLO        6  0       COLHDG('IN TIME')
+     A            STATSLO        2          COLHDG('STATUS')
+     A            STDTELO        8  0       COLHDG('STATUS' 'DATE')
+     A            STTIMLO        6  0       COLHDG('STATUS' 'TIME')
+     A*
+     A**********************************************************************
+     A*           TRAL      -                TRAILER FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0050000 005000 00005
+     A*         R TRALFM
+     A*
+     A            ACRECTR        1          COLHDG('ACTIVE' 'CODE')
+     A*                                     USED AS A POOL FLAG SINCE 10/10/08
+     A*                                     "P" = POOL (COST CENTER 300)
+     A            EQUIPTR        8          COLHDG('EQUIPMENT#')
+     A            ETTPETR        1          COLHDG('EQUIP' 'TYPE')
+     A*                                        T=TRAILER, B=BOGEY
+     A*                                        Z=CHASSIS
+     A            CONCDTR        2S 0       COLHDG('GROUP' 'CODE')
+     A            FLEETTR        6          COLHDG('FLEET' 'CODE')
+     A            CARCDTR        4          COLHDG('CARRIER' 'CODE')
+     A            OWNERTR        1          COLHDG('OWNER' 'CODE')
+     A*                                       ' ' = COMPANY TRAILER
+     A*                                       'R' = RENTAL TRAILER
+     A*
+     A* RENTAL DATE FOR RENTALS ONLY IN MMDDYY FORMAT - NO CENTY REQ
+     A            RENDTTR        6  0       COLHDG('RENTED' 'DATE')
+     A*
+     A* VEHICLE DESCRIPTION
+     A            LENGTTR        2S 0       COLHDG('TRAILER' 'LENGTH')
+     A            HEIGHTR        3  0       COLHDG('TRAILER' 'HEIGHT')
+     A            WIDTHTR        3  0       COLHDG('TRAILER' 'WIDTH')
+     A            TTYPETR        2          COLHDG('TRAILER' 'TYPE')
+     A*                                        RF = REFERIGERATION
+     A*                                        DV = DRY VAN
+     A*                                        BR = ROPED
+     A*                                        PP = PUPS
+     A*                                        DF = DROP FRAME
+     A*                                        HT = HEATED
+     A*                                        LG = LIFT GATE
+     A            REMRKTR       30          COLHDG('REMARKS')
+     A*
+     A* DISPATCH
+     A            TRACTTR        8          COLHDG('CURRENT' 'TRACTOR')
+     A            LOCATTR        2          COLHDG('LOCATION' 'PREFIX')
+     A            LOCASTR        4          COLHDG('LOCATION' 'SUFFIX')
+     A            STATUTR        2          COLHDG('STATUS')
+     A*                                       IT = IN TRANSIT
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A*                                       SP = SPOTTED
+     A*                                       DL = DEADLINED
+     A*                                       OS = OUT OF SERVICE
+     A*                                       OR = OUTSIDE REPAIR
+     A*                                       ST = STORAGE
+     A*                                       MS = MISSING
+     A*                                       WL = WORKING LOCAL
+     A*                                       YD = IN YARD
+     A            STADTTR         L         COLHDG('STATUS' 'DATE')
+     A            STATMTR        4  0       COLHDG('STATUS' 'TIME')
+     A*
+     A            REPDTTR         L         COLHDG('LAST' 'REPORTED')
+     A            REPTMTR        4  0       COLHDG('REPORT' 'TIME')
+     A*
+     A            DOORTTR        1          COLHDG('DOOR' 'TYPE')
+     A*                                          = SWING
+     A*                                        R = ROLLUP
+     A            TRACKTR        1          COLHDG('TRACKING' 'SYSTEM')
+     A*                                        T = TERRION
+     A            CALIFTR        1          COLHDG('CA' 'PROHIBITED')
+     A*                                        Y = YES
+     A            MAINTTR        1          COLHDG('MAINT' 'REQUIRED')
+     A*                                        M = MAINT REQUIRED
+     A*                                        T = TRACKING SYSTEM MAINT
+     A*                                            REQUIRED
+     A* SPECIAL ATTRIBUTES :  6/2011
+     A            ETRAKTR        1          COLHDG('ETRACK' 'EQUIP')
+     A*                                        Y = YES
+     A            LIFTGTR        1          COLHDG('LIFTGATE' 'EQUIP')
+     A*                                        Y = YES
+     A*
+     A* EXTRA FIELDS FOR THE FUTURE
+     A            MISC1TR        1          COLHDG('EXTRA' 'FIELD 1')
+     A            MISC2TR        1          COLHDG('CARB' 'COMPIANT')
+     A*                                        Y = CARB COMPLIANT
+     A            MISC3TR        1          COLHDG('EXTRA' 'FIELD 3')
+     A            MISC4TR        1          COLHDG('EXTRA' 'FIELD 4')
+     A*
+     A* EXTRA FIELDS FOR TRAILER LOST FLAG AND DATE
+     A            LOSTFTR        1          COLHDG('LOST' 'FLAG')
+     A*                                        Y = LOST
+     A            LODATTR         L         COLHDG('LOST' 'DATE')
+     A*
+     A            RFID#TR        6  0       COLHDG('NOT USED')
+     A            RFTAGTR        6          COLHDG('RFID TAG')
+     A**********************************************************************
+     A*           UNIT      -                POWER UNITS FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0025000 005000 00005
+     A*         R UNITFM
+     A*
+     A            ACRECUN        1          COLHDG('ACTIVE' 'CODE')
+     A            UNIT#UN        8          COLHDG('UNIT' 'NUMBER')
+     A            OWNERUN        1          COLHDG('OWNER' 'TYPE')
+     A*                                        H = HOUSE UNIT
+     A*                                        O = OWNER OPERATOR
+     A            DIV##UN        4          COLHDG('DIVISION')
+     A            CONCDUN        3          COLHDG('GROUP' 'CODE')
+     A            MANAGUN        6          COLHDG('FLEET' 'MNGR')
+     A*
+     A* VEHICLE DESCRIPTION
+     A            VYEARUN        4  0       COLHDG('VEHICLE' 'YEAR')
+     A            VMAKEUN        8          COLHDG('VEHICLE' 'MAKE')
+     A            REMRKUN       23          COLHDG('REMARKS')
+     A*
+     A* DISPATCH DATA
+     A* DRIVERS ASSIGNED
+     A            DRIV1UN        6          COLHDG('DRIVER 1')
+     A            DRIV2UN        6          COLHDG('DRIVER 2')
+     A*
+     A* EQUIPMENT ATTACHED
+     A            TRLR1UN        8          COLHDG('TRAILER 1')
+     A            TRLR2UN        8          COLHDG('TRAILER 2')
+     A            BOGEYUN        8          COLHDG('BOGEY')
+     A*
+     A* CURRENT DESTINATION
+     A            DESTNUN        2          COLHDG('LOCATION' 'PRE')
+     A            DESTSUN        4          COLHDG('LOCATION' 'SUF')
+     A            AVLDTUN         L         COLHDG('AVAILABLE' 'DATE')
+     A            CDIV#UN        4          COLHDG('CURRENT' 'DIV')
+     A            CTRIPUN        7  0       COLHDG('CURRENT' 'TRIP')
+     A            CCONT#N        6  0       COLHDG('CURRENT' 'CONT')
+     A*                                       *** NOT USED ***
+     A* LAST REPORTED LOCATION/STATUS
+     A            LOCATUN        2          COLHDG('LAST' 'LOCATION')
+     A            LOCASUN        4          COLHDG('LOCATION' 'SUFFIX')
+     A            STATUUN        2          COLHDG('STATUS')
+     A*                                       AV = AVAILABLE
+     A*                                       AS = ASSIGNED
+     A*                                       IT = IN TRANSIT
+     A*                                       OS = OUT OF SERVICE
+     A            STADTUN         L         COLHDG('STATUS' 'DATE')
+     A            STATMUN        4  0       COLHDG('STATUS' 'TIME')
+     A            COSTCUN        3  0       COLHDG('COST' 'CENTER')
+     A            TRKTPUN        1          COLHDG('TRUCK' 'TYPE')
+     A            HUBMIUN        7  0       COLHDG('HUB' 'MILES')
+     A                                      DFT(0)
+     A            MBCOMUN        2          COLHDG('MOBILE' 'COM')
+     A*                                     XA = XATA
+     A*                                     RM = RAND MCNALLY
+     A*                                     RE = RELTIMA
+     A*                                     QC = QUALCOM
+     A**********************************************************************
+     A*           YARD      -                YARD INVENTORY FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0025000 001000 00003
+     A*         R YARDFM
+     A*
+     A            ACRECY         1          COLHDG('ACTIVE CODE')
+     A            CARRCY         4          COLHDG('CARRIER' 'CODE')
+     A            EQUIPY        10          COLHDG('UNIT #')
+     A            ETYPEY         1          COLHDG('UNIT TYPE')
+     A*                                        B = BOGEY
+     A*                                        T = TRAILER
+     A*                                        C = CONTAINER
+     A*                                        R = RAIL CONTAINER
+     A*                                        S = STRAIGHT TRUCK
+     A*                                        P = POWER (TRACTOR)
+     A*                                        Z = CHASSIS
+     A*
+     A* TRAILER LENGTH & TYPE & FLEET (NRS TRAILERS ONLY)
+     A            LENGTY         2S 0       COLHDG('TRAILER' 'LENGTH')
+     A            FLEETY         6          COLHDG('TRAILER' 'FLEET')
+     A            TTYPEY         2          COLHDG('TRAILER' 'TYPE')
+     A*                                        RF = REFERIGERATION
+     A*                                        DV = DRY VAN
+     A*                                        BR = ROPED
+     A*                                        PP = PUPS
+     A*                                        DF = DROP FRAME
+     A*                                        HT = HEATED
+     A*
+     A* CURRENT ASSIGNED LOCATION
+     A            FACL#Y         3          COLHDG('FACILITY')
+     A            YARD#Y         1          COLHDG('YARD')
+     A*                                       ? = UNKNOW
+     A            LTYPEY         1          COLHDG('LOCATION' 'TYPE')
+     A*                                       D = DOOR
+     A*                                       S = SLOT
+     A*                                       U = UNSLOTTED
+     A*                                       R = ROW
+     A            LOCT#Y         3  0       COLHDG('LOCATION #')
+     A*
+     A* INBOUND DATA
+     A            INBDTY         7  0       COLHDG('INBOUND' 'DATE')
+     A            INBTMY         4  0       COLHDG('INBOUND' 'TIME')
+     A            INBOPY         5          COLHDG('INBOUND' 'OPER')
+     A            INCUSY         2          COLHDG('INBOUND' 'CUST')
+     A            SEAL1Y         8          COLHDG('SEAL #1')
+     A            SEAL2Y         8          COLHDG('SEAL #2')
+     A            TRACTY         8          COLHDG('I/B TRACT')
+     A            IBCARY         4          COLHDG('I/B CARRIER')
+     A            INBCCY         3  0       COLHDG('IB COST' 'CENTER')
+     A            INSTSY         2          COLHDG('INBOUND' 'STATUS')
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A*                                       OS = OUT OF SERVICE
+     A*                                       ST = STORAGE
+     A*
+     A* SWITCHER JOB STATUS'
+     A            REQSTY         2          COLHDG('SW REQUEST' 'STATUS')
+     A*                                          = AVAILABLE
+     A*                                       GP = GATE PASS
+GP01 A*                                        (TO BE MOVED TO GTPSTY FLD)
+     A*                                       SJ = SWITCHER JOB
+     A            REQ##Y         7  0       COLHDG('SWITCHER JOB#')
+     A*
+     A            STATUY         2          COLHDG('STATUS')
+     A*                                       MT = EMPTY
+     A*                                       LD = LOADED
+     A*                                       OS = OUT OF SERVICE
+     A*                                       ST = STORAGE
+     A*                                       MS = MISSING
+     A*                                       HL = HOLD
+     A*                                       XS = EXCESS TRAILERS
+     A            CUSTCY         2          COLHDG('CUSTOMER' 'CODE')
+     A            STADTY         7  0       COLHDG('STATUS' 'DATE')
+     A            STATMY         4  0       COLHDG('STATUS' 'TIME')
+     A            REMRKY        50          COLHDG('REMARKS')
+     A* CHASSIS ADDED ON 09/05 BY AD
+     A            CHASSY        10          COLHDG('CHASSIS' 'UNIT#')
+     A* DOOR TYPE ADDED ON 07/07 BY AD
+     A            DOORTY         1          COLHDG('DOOR' 'TYPE')
+     A*                                        S = SWING
+     A*                                        R = ROLLUP
+     A* GATE PASS  STATUS'
+GP01 A            GTPSTY         2          COLHDG('GP REQUEST' 'STATUS')
+GP01 A*                                          = AVAILABLE
+GP01 A*                                       GP = GATE PASS
+GP01 A            GTP##Y         7  0       COLHDG('GATE PASS#')
+     A* NEW FIELDS - 7/10
+     A* TRACKING SOFTWARE
+     A            TRACKY         1          COLHDG('TRACKING' 'SYSTEM')
+     A*                                        T = TERRION
+     A* CALIFORINA PROHIBITED TRAILER
+     A            CALIFY         1          COLHDG('CA' 'PROHIB')
+     A*                                        Y = YES
+     A* MAINTENANCE REQUIRED
+     A            MAINTY         1          COLHDG('MAINT' 'REQUIRED')
+     A*                                        Y = YES
+     A* STREET TURN RESERVATION NUMBER
+     A            RESERY         7  0       COLHDG('RESERVATION #')
+     A* CONTAINER SIZE
+     A            CNSIZY         4          COLHDG('CONTAINER' 'SIZE CODE')
+     A* SPECIAL ATTRIBUTES :  6/2011
+     A            ETRAKY         1          COLHDG('ETRACK' 'EQUIP')
+     A*                                        Y = YES
+     A            LIFTGTY        1          COLHDG('LIFTGATE' 'EQUIP')
+     A*                                        Y = YES
+     A*
+     A* EXTRA FIELDS FOR THE FUTURE
+     A            MISC1Y         1          COLHDG('EXTRA' 'FIELD 1')
+     A            MISC2Y         1          COLHDG('EXTRA' 'FIELD 2')
+     A            MISC3Y         1          COLHDG('EXTRA' 'FIELD 3')
+     A            MISC4Y         1          COLHDG('EXTRA' 'FIELD 4')
+     A* CHASSIS POOL - FOR CONTAINERS
+     A            CHSPLY         4          COLHDG('CHASSIS' 'POOL')
+     A* DAMAGES NOTED ON INBOUND
+     A            DAMAGY         1          COLHDG('DAMAGES' 'FOUND')
+     A*                                        Y = DAMAGE(S) FOUND
+     A            DAM##Y         7  0       COLHDG('DAMAGES' 'REF#')
+     A*
+     A            RFID#Y         6  0       COLHDG('NOT USED')
+     A            RFTAGY         6          COLHDG('RFID TAG')
+     A            LSTDTY          Z         COLHDG('LAST' 'LOC' 'CHG')
+     A                                      ALWNULL
+     A* INBOUND DRIVER DATA - NEW 2022 FOR FOREIGN DRIVERS
+     A            LICNOY        15          COLHDG('DRIVER LIC #')
+     A            LICSTY         2          COLHDG('LICENSE' 'STATE')
+     A            DNAMEY        15          COLHDG('DRIVER NAME')
+     A**********************************************************************
+     A*           YWHO      -               YARD POINT FINGER FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0015000 005000 00003
+     A*         R YWHOFM
+     A*
+     A            ACRECOD        1          COLHDG('ACTIVE' 'CODE')
+     A            FACL#OD        3          COLHDG('FACILITY')
+     A            CARRCOD        4          COLHDG('CARRIER' 'CODE')
+     A            EQUIPOD       10          COLHDG('UNIT #')
+     A            USRIDOD        5          COLHDG('OPERATOR' 'ID')
+     A            DATEOOD        7  0       COLHDG('DATE' 'OCC')
+     A            TIMEOOD        4  0       COLHDG('TIME' 'OCC')
+     A            OLDSTOD        2          COLHDG('STATUS' 'ORIGINAL')
+     A            NEWSTOD        2          COLHDG('STATUS' 'CHANGED')
+     A            PGM##OD       10          COLHDG('PROGRAM')
+     A            OLDS1OD        8          COLHDG('SEAL 1' 'ORIGINAL')
+     A            NEWS1OD        8          COLHDG('SEAL 1' 'CHANGED')
+     A            OLDS2OD        8          COLHDG('SEAL 2' 'ORIGINAL')
+     A            NEWS2OD        8          COLHDG('SEAL 2' 'CHANGED')
+     A**********************************************************************
+     A*           CSID      -               CUSTOMER ID'S
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0001000 000010 00010
+     A*         R CSIDFM
+     A*
+     A            ACRECID        1          COLHDG('ACTIVE' 'CODE')
+     A            CUST_ID        2          COLHDG('CUSTOMER' 'ID')
+     A            NAME_ID       25          COLHDG('CUSTOMER' 'NAME')
+     A**********************************************************************
+     A*           YDLG      -               PROGRAM USAGE LOG FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*         R YDLGFM
+     A*
+     A            ACRECYL        1          COLHDG('ACTIVE' 'CODE')
+     A            PGMIDYL       10          COLHDG('PROGRAM' 'NAME')
+     A            USRIDYL        5          COLHDG('YARD' 'USER ID')
+     A            DATE_YL        7  0       COLHDG('ACTION' 'DATE')
+     A            TIME_YL        4  0       COLHDG('ACTION' 'TIME')
+     A            ACTN_YL        1          COLHDG('ACTION')
+     A*                                     O=PROGRAM OPENED
+     A*                                     R=SCREEN REFRESHED
+     A            ALPHAYL       10          COLHDG('FUTURE' 'USE')
+     A**********************************************************************
+NC01 A*           MDYR      -               PROGRAM USAGE LOG FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*         R MDYRFM
+     A*
+     A            SCACMY         4          COLHDG('SCAC')
+     A            EQIPMY         1          COLHDG('EQUIP')
+     A            INOUTMY        1          COLHDG('IN/OUT')
+     A**********************************************************************
+PR01 A*           DTFN      -               DTFN PRINT WORK FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*         R DTFNFM
+     A*
+     A            RECTYDT        2          COLHDG('RECORD TYPE')
+     A            PRTF1DT       10          COLHDG('PRINT FIELD 1')
+     A            PRTF2DT       20          COLHDG('PRINT FIELD 2')
+     A            PRTF3DT       20          COLHDG('PRINT FIELD 3')
+     A            PRTF4DT       15          COLHDG('PRINT FIELD 4')
+     A            PRTF5DT       25          COLHDG('PRINT FIELD 5')
+     A            PRTF6DT       20          COLHDG('PRINT FIELD 6')
+     A            PRTF7DT       20          COLHDG('PRINT FIELD 7')
+     A            PRTF8DT       20          COLHDG('PRINT FIELD 8')
+     A            PRTF9DT       20          COLHDG('PRINT FIELD 9')
+     A*
+     A**********************************************************************
+PR01 A*           YDAU      -               YARD AUDIT FILE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0001000 000100 00002
+     A*         R YDAUFM
+     A*
+     A            ACRECYU        1          COLHDG('ACTIVE CODE')
+     A            EQUIPYU       10          COLHDG('UNIT #')
+     A            CUSTCYU        2          COLHDG('CUSTOMER' 'CODE')
+     A            STATUYU        2          COLHDG('STATUS')
+     A            DATEEYU        7  0       COLHDG('DATE ENTERED')
+     A            TIMEEYU        4  0       COLHDG('TIME ENTERED')
+     A            PGMNAYU       10          COLHDG('PROGRAM NAME')
+     A*
+     A**********************************************************************
+     A*           SWDR      -               SWITCHER TO DOOR NOT AVAILABLE
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*         R SWDRFM
+     A*
+     A*
+     A            FACL#DR        3          TEXT('FACILITY')
+     A            ACTNDDR         L         TEXT('ASSIGNING DATE')
+     A                                      DATFMT(*ISO)
+     A            ACTNTDR         T         TEXT('ASSIGNING TIME')
+     A                                      TIMFMT(*HMS)
+     A            ATYPEDR        1          TEXT('ASSIGNING TYPE')
+     A*                                         @ = PRE-PLAN
+     A*                                         T = HOT JOBS
+     A*                                         BLANK = REGULAR
+     A            SWTIDDR        5          TEXT('SWITCHER ID')
+     A            SJOB#DR        7  0       TEXT('JOB TO BE ASSIGNED')
+     A            EDDATDR        7  0       TEXT('DATE ENTERED')
+     A            EDTIMDR        4  0       TEXT('TIME ENTERED')
+     A            CARR_DR        4          TEXT('EQUIPMENT CARRIER/SCAC')
+     A            EQUIPDR       10          TEXT('EQUIPMENT NUMBER')
+     A            XJOB#DR        7  0       TEXT('JOB PREVENTING ASSIGNMENT')
+     A            XSTSJDR        1          TEXT('JOB STATUS')
+     A            XENDTDR        7  0       TEXT('DATE ENTERED')
+     A            XENTMDR        4  0       TEXT('TIME ENTERED')
+     A            XASDTDR        7  0       TEXT('DATE ASSIGNED/STARTED')
+     A            XASTMDR        4  0       TEXT('TIME ASSIGNED/STARTED')
+     A            XHKDTDR        7  0       TEXT('HOOK DATE')
+     A            XHKTMDR        4  0       TEXT('HOOK TIME')
+     A**********************************************************************
+     A*           YDXX      -               YARD CAPACITY USAGE STATISTICS
+     A**********************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*         R YDXXFM
+     A*
+     A*
+     A            DATEXX          L         TEXT('LOAD DATE')
+     A                                      DATFMT(*ISO)
+     A            TIMEXX          T         TEXT('LOAD TIME')
+     A                                      TIMFMT(*HMS)
+     A            FACLXX         3          TEXT('FACILITY')
+     A            YARDXX         1          TEXT('YARD')
+     A            TYPEXX         1          TEXT('YARD TYPE')
+     A            MAX#XX         5  0       TEXT('YARD MAX CAPACITY')
+     A            TLD#XX         5  0       TEXT('TRAILERS LOADED')
+     A            TMT#XX         5  0       TEXT('TRAILERS EMPTY')
+     A            TOS#XX         5  0       TEXT('TRAILERS OS/ST')
+     A            TTOTXX         5  0       TEXT('TRAILERS TOTAL')
+     A            CLD#XX         5  0       TEXT('CONTAINERS LOADED')
+     A            CMT#XX         5  0       TEXT('CONTAINERS EMPTY')
+     A            COS#XX         5  0       TEXT('CONTAINERS OS/ST')
+     A            CTOTXX         5  0       TEXT('CONTAINERS TOTAL')
+     A            RLD#XX         5  0       TEXT('R/R BOXES LOADED')
+     A            RMT#XX         5  0       TEXT('R/R BOXES EMPTY')
+     A            ROS#XX         5  0       TEXT('R/R BOXES OS/ST')
+     A            RTOTXX         5  0       TEXT('R/R BOXES TOTAL')
+     A            @LD#XX         5  0       TEXT('ALL LOADED')
+     A            @MT#XX         5  0       TEXT('ALL EMPTY')
+     A            @OS#XX         5  0       TEXT('ALL OS/ST')
+     A            @TOTXX         5  0       TEXT('ALL TOTAL')
+     A            @PCTXX         5  0       TEXT('PERCENTAGE USED')
+     A**********************************************************************
+     A**********************************************************************
+     A*           TYRD      -                MISC DB TABLE FILE
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0002500 000100 00005
+     A*
+     A*         R TYRDFM
+     A*
+     A            CODETY         6A         COLHDG('CODE')
+     A            TYPETY         6A         COLHDG('TABLE' 'TYPE')
+     A            DESCTY        20A         COLHDG('TABLE' 'DESC')
+     A            VAL1TY        10A         COLHDG('VALUE1')
+     A            VAL2TY        10A         COLHDG('VALUE2')
+     A**********************************************************************
+     A**********************************************************************
+     A*           YDEML     -                EMAIL ADDRESSES FOR YARD
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*
+     A*         R YDEMLFM
+     A            STATYE         1A         COLHDG('Status')
+      *               Blank - Active
+      *               D     - Deleted
+     A            FACLYE         3A         COLHDG('Facility')
+     A            EADDYE        70A         COLHDG('Email Address')
+     A            PGMNME        10A         COLHDG('Program' 'Name')
+     A**********************************************************************
+     A**********************************************************************
+     A*           YARDLOC   -                YARD LOCATION ADDRESSES
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*
+     A*         R YARDLOCFM
+     A            FACLLA         3A         COLHDG('Facility')
+     A            YARDLA         1A         COLHDG('Yard')
+     A            ADDRRLA       35A         COLHDG('Address')
+     A            CITYLA        35A         COLHDG('City')
+     A            STATELA        2A         COLHDG('State')
+     A            ZIPCDLA        5A         COLHDG('Zip')
+     A            LATITUDELA    15A         COLHDG('Latitude')
+     A            LONGITUDLA    20A         COLHDG('Longitude')
+     A            LOCTNAME      25A         COLHDG('Location Name')
+     A**********************************************************************
+     A**********************************************************************
+     A*           YARDDEST  -                YARD DESTINATION
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   1000000 100000 10000
+     A*
+     A*         R YARDDESTR
+     A            YDSTATUS       1A         COLHDG('Status')
+      *              Blank - Active
+      *              D     - Deleted
+     A            YDFACL         3A         COLHDG('Facility')
+     A            YDCUST         2A         COLHDG('Customer' 'Code')
+     A            YDYARD         1A         COLHDG('Yard' 'Destination')
+     A            YDCONDITN      2A         COLHDG('Process' 'Condition')
+      *              LD - Load (Loaded trailer/Container MUST go to a designated
+      *                         building/yard. Empty ones will go to yard S-U)
+      *              ** - Load/Empty (Loaded or Emptied trailer/container
+      *                               MUST be assigned to a designated yard)
+     A            YDENTRYTM       Z         COLHDG('Entry' 'Time')
+     A            YDENTRYUSR    10A         COLHDG('Entry' 'User')
+     A            YDCHANGTM       Z         COLHDG('Changed' 'Time')
+     A            YDCHANGUSR    10A         COLHDG('Changed' 'User')
+     A**********************************************************************
+     A*           TJXA      -                TJMAXX CROSS REF #1
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*
+     A*         R TJXAFM
+     A            ACCT#TA        5  0       COLHDG('ACCT#')
+     A            QUALITA        3  0       COLHDG('QUALIF' 'DESTN')
+     A            DESTNTA       20          COLHDG('DESTINATION')
+     A*
+     A**********************************************************************
+     A*           TJXB      -                TJMAXX CROSS REF #2
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*
+     A*         R TJXBFM
+     A            SCACCTB        4          COLHDG('SCAC CODE')
+     A            CARRITB       20          COLHDG('CARRIER')
+     A*
+     A**********************************************************************
+     A*           TJXF      -                TJMAXX OUTPUT FILE.
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*
+     A*         R TJXFFM
+     A            MDATETF        8          COLHDG('MANIFEST' 'DATE')
+     A            MTIMETF        5          COLHDG('MANIFEST' 'TIME')
+     A            CNAMETF       25          COLHDG('CARRIER' 'NAME')
+     A            BOL##TF       12          COLHDG('BOL#')
+     A            DCNAMTF       25          COLHDG('DC' 'NAME')
+     A            ORIGNTF        3          COLHDG('FACILITY')
+     A            OBTRLTF       11          COLHDG('TRAILER')
+     A            BLDGDTF       15          COLHDG('BUILDING' 'DESC')
+     A*
+     A**********************************************************************
+     A*           TJCG      -                TJMAXX YARD WORKFILE
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*
+     A*         R TJCGFM
+     A            CNAMETG       25          COLHDG('CARRIER' 'NAME')
+     A            TMODETG        4          COLHDG('MODE')
+     A            EXPOLTG        5  0       COLHDG('EXPECTED' 'POOL')
+     A            TRLOHTG        5  0       COLHDG('TRAILERS' 'ON-HAND')
+     A            EMPTYTG        5  0       COLHDG('EMPTY')
+     A            LOADNTG        5  0       COLHDG('LOADING')
+     A            LODIBTG        5  0       COLHDG('LOADED' 'IB')
+     A            LODOBTG        5  0       COLHDG('LOADED' 'OB')
+     A            LBSRVTG        5  0       COLHDG('LOADED' 'BEYOND SRV')
+     A            DAMAGTG        5  0       COLHDG('DAMAGE')
+     A*
+     A*
+     A**********************************************************************
+     A*           TJJB      -                TJMAXX YARD WORKFILE  JBHU
+     A*****************************************************************
+     A*                                     SIZE   INCR.  TIMES
+     A*&                                   0000500 000100 00002
+     A*
+     A*         R TJJBFM
+     A            CNAMETH       25          COLHDG('CARRIER' 'NAME')
+     A            EQUIPTH       10          COLHDG('UNIT#')
+     A            OLSRVTH        1          COLHDG('LOADED' 'OUT LV OF SRV')
+     A            OUTOSTH        1          COLHDG('TRAILER' ' OUT OF SERVICE')
+     A*
+     A**********************************************************************
+     A*           RAIL      -                RAILBOX ONLY CARRIER
+     A**********************************************************************
+      *
+     A*         R RAILFM
+     A*
+     A            ZCARR          4          COLHDG('CARRIER' 'CODE')
+     A**********************************************************************
+     A*           LUSR      -                LAST TOUCHED BY USER
+     A**********************************************************************
+     A*         R LUSRFM
+      *
+     A            JBDATE         8S 0       COLHDG('JOB' 'DATE')
+     A            JBTIME         4S 0       COLHDG('JOB' 'TIME')
+     A            FACLU          3          COLHDG('FACILITY')
+     A            CARRU          4          COLHDG('CARRIER' 'CODE')
+     A            EQUIPU        10          COLHDG('UNIT #')
+     A            ETYPEU         1          COLHDG('UNIT TYPE')
+     A            YARD#U         1          COLHDG('YARD')
+     A            LTYPEU         1          COLHDG('LOCATION' 'TYPE')
+     A            LOCT#U         3S 0       COLHDG('LOCATION #')
+     A            SWUSRU         5          COLHDG('SWITCHER' 'USER')
+     A            IBCARU         4          COLHDG('I/B' 'CARRIER')
+     A            IBTRCU         8          COLHDG('I/B' 'TRACTOR')
+     A            PROCCU        10          COLHDG('PROCESS')
+     A            JNBDTU         7S 0       COLHDG('JOB' 'DATE')
+     A            JNBTMU         4S 0       COLHDG('JOB' 'TIME')
+     A            AFLD1U        30          COLHDG('FUTURE' 'FLD')
+     A            AFLD2U        30          COLHDG('FUTURE' 'FLD')
+     A            NFLD1U        10S 0       COLHDG('FUTURE' 'FLD')
+     A            NFLD2U        10S 0       COLHDG('FUTURE' 'FLD')
+     A**********************************************************************
+     A*           RFID      -                RF ID CROSS REFERENCE
+     A**********************************************************************
+     A*         R RFIDFM
+      *
+     A            LTAGRF        24A         TEXT('LONG RFID')
+     A            STAGRF         6A         TEXT('SHORT RFID')
+     A            TYPERF         1A         TEXT('TYPE: T=TEMP, P=PERM')
+     A**********************************************************************
+     A*           AUTHB
+     A**********************************************************************
+     A*         R AUTHBFM
+     A*
+     A*           FACLB          3A         TEXT('FACILITY')
+     A*           BULDB          1A         TEXT('BUILDING')
+     A**********************************************************************
+     A*           FCAR      -                CARRIERS BY FACILITY
+     A**********************************************************************
+     A*         R FCARFM
+     A*
+     A            FFACL          3A         TEXT('FACILITY')
+     A            FCARR          4A         TEXT('CARRIER ')
+     A**********************************************************************
+     A*           FCST      -                CUSTOMERS BY FACILITY
+     A**********************************************************************
+     A*         R FCSTFM
+     A*
+     A            IFACL          3A         TEXT('FACILITY')
+     A            IYARD          1A         TEXT('YARD')
+     A            ICSID          2A         TEXT('CUSTOMER')
+     A            IDFLT          1A         TEXT('DEFAULT CUST(Y/ )')
+     A*

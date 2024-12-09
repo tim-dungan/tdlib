@@ -1,0 +1,210 @@
+      --%METADATA                                                      *
+      -- %TEXT UDTF to retreive PGMREFS                                *
+      --%EMETADATA                                                     *
+SET PATH *LIBL ;
+
+CREATE OR REPLACE FUNCTION SQLTOOLS.PGMREFS (
+  LIBRARY_NAME VARCHAR(10) DEFAULT  '*LIBL'  ,
+  OBJECT_NAME VARCHAR(10) ,
+  OBJTYPE VARCHAR(60) DEFAULT  '*ALL'  ,
+  DATA_OPTION VARCHAR(10) DEFAULT  '*REPLACE'  )
+  RETURNS TABLE (
+  OBJNAME VARCHAR(10) ,
+  OBJLIB VARCHAR(10) ,
+  OBJTYPE VARCHAR(10) ,
+  OBJATTR VARCHAR(10) ,
+  OBJTEXT VARCHAR(50) ,
+  OBJREFCOUNT INTEGER ,
+  LASTUSEDDATE DATE ,
+  REFOBJNAME VARCHAR(11) ,
+  REFOBJLIB VARCHAR(11) ,
+  REFOBJTYPE VARCHAR(10) ,
+  REFOBJATTR VARCHAR(10) ,
+  REFSRCNAME VARCHAR(11) ,
+  REFOBJTEXT VARCHAR(50) ,
+  REFRCDFMT VARCHAR(10) ,
+  RCDFMT_COUNT INTEGER ,
+  FILE_USAGE VARCHAR(50) ,
+  LVLCHKID CHAR(13) ,
+  FIELDS INTEGER ,
+  SYSNAME VARCHAR(8) ,
+  RETRIEVED_TIME TIMESTAMP(0) )
+  LANGUAGE SQL
+  SPECIFIC SQLTOOLS.Z_PGMREFS
+  NOT DETERMINISTIC
+  READS SQL DATA
+  CALLED ON NULL INPUT
+  NOT FENCED
+  SET OPTION  ALWBLK = *ALLREAD ,
+  ALWCPYDTA = *OPTIMIZE ,
+  COMMIT = *NONE ,
+  DECRESULT = (31, 31, 00) ,
+  DLYPRP = *NO ,
+  DYNDFTCOL = *NO ,
+  DYNUSRPRF = *USER ,
+  SRTSEQ = *HEX
+  BEGIN
+DECLARE ERROR_CODE BIGINT DEFAULT 0 ;
+DECLARE PGMREFCMD VARCHAR ( 256 ) ;
+DECLARE MBROPT VARCHAR ( 10 ) NOT NULL DEFAULT '*REPLACE' ;
+DECLARE REPL VARCHAR ( 10 ) ;
+DECLARE OBJ_NAME VARCHAR ( 11 ) NOT NULL DEFAULT '' ;
+DECLARE GEN INT NOT NULL DEFAULT 0 ;
+DECLARE DTS_FMT VARCHAR ( 26 ) NOT NULL DEFAULT 'YYYYMMDDHH24MISSFF12' ;
+BEGIN
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ERROR_CODE = 2 ;
+
+IF ( DATA_OPTION IS NOT NULL AND LENGTH ( DATA_OPTION ) > 0 ) THEN
+SET REPL = TRIM ( L '*' FROM UPPER ( DATA_OPTION ) ) ;
+IF ( LENGTH ( REPL ) > 0 ) THEN
+SET REPL = SUBSTR ( REPL , 1 , 1 ) ;
+IF ( REPL IN ( '0' , 'A' , 'N' ) ) THEN
+SET MBROPT = '*ADD' ;
+END IF ;
+END IF ;
+END IF ;
+
+-- Check OBJECT_NAME contains '%'
+--  If it does, use *ALL for object name,
+--  and add WHERE clause to the returned SELECT
+--    WHPNAM LIKE :objName
+IF ( OBJECT_NAME IS NOT NULL AND LENGTH ( OBJECT_NAME ) > 1 ) THEN
+SET GEN = POSITION ( '%' , OBJECT_NAME ) ;
+IF ( GEN IS NOT NULL AND GEN > 0 AND GEN <> LENGTH ( OBJECT_NAME ) ) THEN
+SET OBJ_NAME = '*ALL' ;
+ELSEIF ( GEN IS NOT NULL AND GEN = LENGTH ( OBJECT_NAME ) ) THEN
+SET GEN = 0 ;
+SET OBJ_NAME = RTRIM ( OBJECT_NAME , '% ' ) CONCAT '*' ;
+ELSE
+SET GEN = 0 ;
+SET OBJ_NAME = OBJECT_NAME ;
+END IF ;
+END IF ;
+
+IF ( OBJ_NAME = '' ) THEN
+SET OBJ_NAME = '*ALL' ;
+END IF ;
+
+SET PGMREFCMD = 'QSYS/DSPPGMREF PGM('
+CONCAT TRIM ( LIBRARY_NAME )
+CONCAT '/' CONCAT OBJ_NAME CONCAT ') '
+CONCAT 'OBJTYPE(' CONCAT OBJTYPE CONCAT ') '
+CONCAT 'OUTPUT(*OUTFILE) '
+CONCAT 'OUTFILE(QTEMP/ST_PGMREF2) '
+CONCAT 'OUTMBR(*FIRST '
+CONCAT MBROPT CONCAT ')' ;
+
+CALL SQLTOOLS . QCAPCMD_RD ( PGMREFCMD ) ;
+END ;
+
+IF ERROR_CODE > 1 THEN
+SIGNAL SQLSTATE '42704'
+SET MESSAGE_TEXT = 'FAILURE on DSPPGMREF cmd inside PGMREF UDTF' ;
+END IF ;
+
+RETURN SELECT
+WHPNAM ,
+WHLIB ,
+CAST ( CASE WHEN WHSPKG = 'P' THEN '*PGM'
+WHEN WHSPKG = 'S' THEN '*SQLPKG'
+WHEN WHSPKG = 'V' THEN '*SRVPGM'
+WHEN WHSPKG = 'M' THEN '*MODULE'
+WHEN WHSPKG = 'Q' THEN '*QRYDFN'
+END AS VARCHAR ( 10 ) ) ,
+OD . OBJATTR ,
+WHTEXT ,
+CAST ( WHFNUM AS INT ) ,  -- Ref Objects Count
+OD . LASTUSEDDATE ,
+
+CASE WHEN WHFNAM = '1' THEN '*EXPR' ELSE WHFNAM END ,
+CASE WHEN WHLNAM = '1' THEN '*EXPR' ELSE WHLNAM END ,
+WHOTYP ,
+RO . OBJATTR ,
+CASE WHEN WHSNAM = '1' THEN '*EXPR' ELSE WHSNAM END ,
+RO . OBJTEXT ,
+WHRFNM ,
+CAST ( WHRFNB AS INT ) ,  -- RcdFmt Count
+CAST (
+--  1=I,2=O,3=I/O,4=U,5=I/U,6=O/U,7=I/O/U,8=N/S,0=N/A
+--  (Apparently DELETE isn't supported; returned as UPDATE)
+CASE WHEN WHFUSG = 0 THEN ' '
+WHEN WHFUSG = 1 THEN 'INPUT'
+WHEN WHFUSG = 2 THEN 'OUTPUT'
+WHEN WHFUSG = 3 THEN 'INPUT     OUTPUT'
+WHEN WHFUSG = 4 THEN 'UPDATE'
+WHEN WHFUSG = 5 THEN 'INPUT     UPDATE'
+WHEN WHFUSG = 6 THEN 'OUTPUT    UPDATE'
+WHEN WHFUSG = 7 THEN 'INPUT     OUTPUT    UPDATE'
+WHEN WHFUSG = 8 THEN 'N/S'
+ELSE 'UNKNOWN'
+END AS VARCHAR ( 40 ) ) ,
+WHRFSN ,
+WHRFFN ,
+WHSYSN ,
+TIMESTAMP_FORMAT ( SUBSTR ( WHDTTM , 2 , 12 ) ,
+'YYMMDDHH24MISS' , 0 )
+FROM QTEMP . ST_PGMREF2 PR
+LEFT OUTER JOIN LATERAL
+( SELECT *
+FROM TABLE ( SQLTOOLS . RTVOBJD ( PR . WHLIB , PR . WHPNAM ,
+CASE WHEN PR . WHSPKG = 'P' THEN '*PGM'
+WHEN PR . WHSPKG = 'S' THEN '*SQLPKG'
+WHEN PR . WHSPKG = 'V' THEN '*SRVPGM'
+WHEN PR . WHSPKG = 'M' THEN '*MODULE'
+WHEN PR . WHSPKG = 'Q' THEN '*QRYDFN'
+END ) ) D ) OD
+ON 1 = 1
+LEFT OUTER JOIN LATERAL
+( SELECT *
+FROM TABLE ( SQLTOOLS . RTVOBJD ( PR . WHLNAM , PR . WHFNAM , PR . WHOTYP ) ) R
+) RO
+ON 1 = 1
+
+-- Note: trim is used here so that the wildcard pattern
+--       of '%XYZ' (which is 4 characters) matches a
+--       WHPNAM value of 'EDTXYZ    '  using LIKE which is
+--       not good at length mismatchs.
+WHERE PR . WHLNAM <> 'QSYS' AND ( WHFNUM > 0 AND TRIM ( WHPNAM ) LIKE
+CASE WHEN GEN = 0 THEN TRIM ( WHPNAM )
+ELSE UPPER ( OBJECT_NAME )
+END )
+ORDER BY WHLIB , WHPNAM , WHLNAM , WHFNAM ;
+END  ;
+
+COMMENT ON SPECIFIC FUNCTION SQLTOOLS.Z_PGMREFS
+  IS
+  'Retrieve Program References (PGMREFS) UDTF returns a list of program
+  references similar to the DSPPGMREF CL command, but in a usable SQL Table
+  format.' ;
+
+COMMENT ON PARAMETER SPECIFIC FUNCTION SQLTOOLS.Z_PGMREFS
+( LIBRARY_NAME IS
+  'The library name of the objects whose references are generated.' ,
+  OBJECT_NAME IS
+  'The Object name (generic*, Full or *ALL) whose list of          referenced ob
+jects is generated. You can also specify                           an SQL wild c
+ard style generic name such as %ABC% or similar.' ,
+  OBJTYPE IS
+  'The optional Object Type. If unspecified *ALL is used.               For prog
+ram references *PGM *SRVPGM and *QRYDFN may be specified.               The DSPP
+GMREF command itself also supports *SQLPKG and *MODULE is               those ar
+e also needed. Up to 5 of these OBJTYPE values may be specified         for this
+ parameter. If more than one is specified, each entry must be           separate
+d by one or more blanks.' ,
+  DATA_OPTION IS
+  'The DSPPGMREF OUTMBR option is specified here. *REPLACE is      the default.
+But *ADD may be specified when using                               PGMREF to pro
+duce several lists. Perhaps when used as                           a lateral joi
+n with OBJECT_STATISTICS.' ) ;
+
+LABEL ON SPECIFIC FUNCTION SQLTOOLS.Z_PGMREFS
+  IS 'Retrieve Program References (PGMREFS)' ;
+
+GRANT ALTER , EXECUTE
+ON SPECIFIC FUNCTION SQLTOOLS.Z_PGMREFS
+TO DUNGANT WITH GRANT OPTION ;
+
+GRANT EXECUTE
+ON SPECIFIC FUNCTION SQLTOOLS.Z_PGMREFS
+TO PUBLIC ;
+
